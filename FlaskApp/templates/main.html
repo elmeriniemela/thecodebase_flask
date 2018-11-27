@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
   	<meta charset="utf-8">
-	<title>Terve</title>
+	<title>The Codebase</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -22,24 +22,25 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active">
-							<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+							<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Link</a>
-						</li>
+						
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Dropdown
+								The Codebase
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
+								<a class="dropdown-item" href="#">Python</a>
+								<a class="dropdown-item" href="#">C/C++</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Something else here</a>
+								<a class="dropdown-item" href="#">Web Development</a>
 							</div>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link disabled" href="#">Disabled</a>
+							<a class="nav-link" href="#">CV</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">LinkedIn</a>
 						</li>
 					</ul>
 					<form class="form-inline my-2 my-lg-0">
@@ -58,8 +59,8 @@
 
 	<div style="margin-top: 15px;" class="container-fluid">
 		<div class="alert alert-success" role="alert">
-				<h4 class="alert-heading">Tervetuloa nettisivulle</h4>
-				<p>:)</p>
+				<h4 class="alert-heading">Welcome to The Codebase</h4>
+				<p>Here you can find my coding projects.</p>
 				<hr>
 				<p class="mb-0">http://thecodebase.site/</p>
 		</div>
@@ -92,8 +93,6 @@
 							</optgroup>
 						</select>
 					</dd>
-				
-
 				</dl>
 			<p>
 					<label>
@@ -101,18 +100,14 @@
 					Haluan siirtää omaisuuteni Elmerille
 					</label>
 			</p>
-		
 			<p>
 				<input type="button" value="Siirrä varat">
 			</p>
-		
-
 			</fieldset>
 		</form>
 
 	</div>
 </div>
-	
 
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
