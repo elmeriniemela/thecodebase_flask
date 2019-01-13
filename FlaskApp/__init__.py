@@ -26,10 +26,6 @@ app.jinja_env.exception_formatter = format_exception
 
 @app.route('/')
 def homepage():
-    from datetime import datetime
-    date = datetime.now()
-    if date.month == 12 and date.day == 6:
-        return render_template("home.html", HOLIDAY=True)
     return render_template("home.html")
 
 @app.route('/python/')

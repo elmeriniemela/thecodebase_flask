@@ -1,9 +1,11 @@
 #!/usr/bin/python
 import sys
+import os
 import logging
 logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0,"/var/www/FlaskApp/")
-sys.path.insert(0,"/var/www/FlaskApp/FlaskApp/")
+current_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, current_dir)
+sys.path.insert(0, os.path.join(current_dir, 'FlaskApp'))
 
 from FlaskApp import app as application
 application.secret_key = 'Add your secret key'
