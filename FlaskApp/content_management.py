@@ -4,7 +4,7 @@ def Content():
             ["Tower Defence", "TowerDefence", "tdgame.html"],
             ["Bemarifield", "bem", "bemarifield.html"],
             ["Physics 2D", "physics", "physics.html"],
-            ["Odoo Portfolio Management", "odoo-portfolio", "odoo_portfolio.html"],
+            ["Odoo", "odoo-portfolio", "odoo_portfolio.html"],
         ],
         "Java":[
             ["Bemarifield", "bem", "bemarifield.html"],
