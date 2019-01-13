@@ -48,6 +48,10 @@ def java():
 def luottokortti():
     return render_template("luottokortti.html")
 
+@app.route('/my-server/')
+def my_server():
+    return render_template("my_server.html")
+
 
 
 if __name__ == "__main__":

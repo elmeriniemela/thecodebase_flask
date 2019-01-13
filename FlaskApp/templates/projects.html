@@ -3,16 +3,16 @@
 
 {% block body %}
 
-    <h1 class="display-3">{{ key }}</h1>
+    <h1 class="display-4 p-2 pb-4">{{ key }}</h1>
     {% if TOPIC_DICT[key] %}
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="{{ TOPIC_DICT[key][0][1] }}-tab" data-toggle="tab" href="#{{ TOPIC_DICT[key][0][1] }}" role="tab" aria-controls="{{ TOPIC_DICT[key][0][1] }}" aria-selected="false">{{ TOPIC_DICT[key][0][0] }}</a>
+            <a class="nav-link active text-dark" id="{{ TOPIC_DICT[key][0][1] }}-tab" data-toggle="tab" href="#{{ TOPIC_DICT[key][0][1] }}" role="tab" aria-controls="{{ TOPIC_DICT[key][0][1] }}" aria-selected="false">{{ TOPIC_DICT[key][0][0] }}</a>
         </li>
 
         {% for t in TOPIC_DICT[key][1:] %}
         <li class="nav-item">
-            <a class="nav-link" id="{{ t[1] }}-tab" data-toggle="tab" href="#{{ t[1] }}" role="tab" aria-controls="{{ t[1] }}" aria-selected="false">{{ t[0] }}</a>
+            <a class="nav-link text-dark" id="{{ t[1] }}-tab" data-toggle="tab" href="#{{ t[1] }}" role="tab" aria-controls="{{ t[1] }}" aria-selected="false">{{ t[0] }}</a>
         </li>
         {% endfor %}
     </ul>
