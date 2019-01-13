@@ -1,7 +1,21 @@
 def Content():
-    TOPIC_DICT = {"Python":[["Bemarifield", "bem", "bemarifield.html"],
-                            ["Tower Defence", "tdgame", "tdgame.html"],
-                            ["Physics 2D", "physics", "physics.html"]],
-                  "Web Dev":[]}
+    return {
+        "Python":[
+            # Title, repo-name
+            # ["Bemarifield", "bem", "bemarifield.html"],
+            ["Tower Defence", "TowerDefence"],
+            # ["Physics 2D", "physics", "physics.html"],
+            # ["Odoo Portfolio Management", "odoo-portfolio", "odoo_portfolio.html"],
+        ],
+        "Java":[
+            # ["Bemarifield", "bem", "bemarifield.html"],
+        ],
+        "Web Development":[
+            # ["Bemarifield", "bem", "bemarifield.html"],
+        ],
+        "C/C++":[
+            # ["Bemarifield", "bem", "bemarifield.html"],
+        ],
+    }
 
-    return TOPIC_DICT
+    
