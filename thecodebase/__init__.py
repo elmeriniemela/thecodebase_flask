@@ -52,6 +52,11 @@ def luottokortti():
 def my_server():
     return render_template("my_server.html")
 
+@app.route('/about-me/')
+def about_me():
+    return render_template("about_me.html")
+
+
 
 
 if __name__ == "__main__":
