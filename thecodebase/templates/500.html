@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+
+{% block body %}
+
+<p>Traceback:
+    <br>
+    {% for line in traceback %}
+    {{ line }}
+    <br>
+    {% endfor %}
+</p>
+<p>{{ error }}</p>
+
+{% endblock %}

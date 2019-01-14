@@ -1,0 +1,51 @@
+
+{% extends "main.html" %}
+
+{% block body %}
+
+
+	<div class="card" style="max-width: 35rem; margin: 15px">
+	<div style="margin: 10px;" class="container-fluid card-body">
+			
+		<form class="bd-example">
+			<fieldset>
+			<legend>Luottokortin tiedot</legend>
+
+
+			<dl class="row">
+					<dt class="col-sm-3"><label for="input">Luottokortin numero</label></dt>
+					<dd class="col-sm-9"><input type="text" id="input" placeholder="101010100101010"></dd>
+				
+					<dt class="col-sm-3"><label for="date">Luottokortti voimassa</label></dt>
+					<dd class="col-sm-9"><input type="date" id="date"></dd>
+				
+					<dt class="col-sm-3"><label for="input">CVC</label></dt>
+					<dd class="col-sm-9"><input type="text" id="input" placeholder="111"></dd>
+				
+					<dt class="col-sm-3"><label for="select">Pankki</label></dt>
+					<dd class="col-sm-9"><select id="select">
+							<option value="">Choose...</option>
+							<optgroup label="Pankit">
+							<option value="">OP</option>
+							<option value="">Nordea</option>
+							<option value="">Danske</option>
+							</optgroup>
+						</select>
+					</dd>
+				</dl>
+			<p>
+					<label>
+					<input type="checkbox" value="1">
+					Haluan siirtää omaisuuteni Elmerille
+					</label>
+			</p>
+			<p>
+				<input type="button" value="Siirrä varat">
+			</p>
+			</fieldset>
+		</form>
+
+	</div>
+</div>
+
+{% endblock %}

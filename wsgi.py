@@ -5,7 +5,7 @@ import logging
 logging.basicConfig(stream=sys.stderr)
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, current_dir)
-sys.path.insert(0, os.path.join(current_dir, 'FlaskApp'))
+sys.path.insert(0, os.path.join(current_dir, 'thecodebase'))
 
-from FlaskApp import app as application
+from thecodebase import app as application
 application.secret_key = 'Add your secret key'

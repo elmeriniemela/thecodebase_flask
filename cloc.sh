@@ -1,1 +1,1 @@
-cloc FlaskApp --exclude-dir=venv,static
+cloc thecodebase --exclude-dir=venv,static
