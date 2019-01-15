@@ -3,7 +3,8 @@
 {% block body %}
 <div class="pt-4">
         <div class="media">
-                <div class="media-body">
+            <div class="media-body">
+                    <img  src="{{ url_for('static', filename='images/server_combined.jpg') }}" class="img-fluid float-right pl-2" ALIGN="right" style="max-width: 50%;" alt="Responsive image"/>
                     <h3>My Server</h3>
                     
                     <p>This website is running on the laptop 
@@ -21,7 +22,6 @@
                          </ul>
                     </p>
                 </div>
-                <img src="{{ url_for('static', filename='images/server_combined.jpg') }}" class="img-fluid float-right pl-2" style="max-width: 50%;" alt="Responsive image"/>
     </div>
 </div>
 {% endblock %}

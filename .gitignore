@@ -1,3 +1,4 @@
 thecodebase/venv/**/*
 *.pyc
+.vscode/*
 !thecodebase/static
