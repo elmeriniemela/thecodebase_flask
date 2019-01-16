@@ -1,10 +1,11 @@
 from flask import Flask, render_template
-from flask import Markup
+from flask import Markup, send_file
 
 from content_management import Content
-import traceback, sys
+import traceback, sys, os
 
 TOPIC_DICT = Content()
+current_dir = os.path.dirname(os.path.realpath(__file__))
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -31,10 +32,10 @@ def topic_dict_context():
 
 @app.route('/')
 def homepage():
-    return render_template("home.html")
+    return render_template("home.html", home=True)
 
 def create_project(topic):
-    app.route('/{}/'.format(topic[1]), endpoint=topic[1])(lambda: render_template('projects.html', key=topic))
+    app.route('/{}/'.format(topic[1]), endpoint=topic[1])(lambda: render_template('projects.html', key=topic, projects=True))
 
 for key in TOPIC_DICT.keys():
     create_project(key)
@@ -45,14 +46,15 @@ def luottokortti():
 
 @app.route('/my-server/')
 def my_server():
-    return render_template("my_server.html")
+    return render_template("my_server.html", my_server=True)
 
 @app.route('/about-me/')
 def about_me():
-    return render_template("about_me.html")
+    return render_template("about_me.html", about_me=True)
 
-
-
+@app.route('/download-cv/')
+def download_cv():
+    return send_file(os.path.join(current_dir, 'docs', 'cv_elmeri.pdf'), attachment_filename='cv_elmeri.pdf')
 
 if __name__ == "__main__":
     app.run()

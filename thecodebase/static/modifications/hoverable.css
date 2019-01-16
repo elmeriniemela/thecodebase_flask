@@ -1,0 +1,8 @@
+.card:hover {
+    /* Chorme */
+    -webkit-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+    /* Mozilla */
+    -moz-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+    /* Normal css property */
+    box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+}

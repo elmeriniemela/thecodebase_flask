@@ -10,11 +10,12 @@
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item {{'active' if home }}">
+                    <!-- <span class="sr-only">(current)</span> -->
+                    <a class="nav-link" href="/">Home</a>
                 </li>
                 
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown {{'active' if projects }}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Projects
                     </a>
@@ -24,10 +25,10 @@
                         {% endfor %}
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{'active' if about_me }}">
                     <a class="nav-link" href="/about-me/">About Me</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{'active' if my_server }}">
                     <a class="nav-link" href="/my-server/">My Server</a>
                 </li>
             </ul>
