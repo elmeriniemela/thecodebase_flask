@@ -24,25 +24,20 @@ def format_exception(tb):
 
 app.jinja_env.exception_formatter = format_exception
 
+@app.context_processor
+def topic_dict_context():
+    return dict(TOPIC_DICT=TOPIC_DICT)
+
+
 @app.route('/')
 def homepage():
     return render_template("home.html")
 
-@app.route('/python/')
-def python():
-    return render_template("projects.html", TOPIC_DICT=TOPIC_DICT, key="Python")
+def create_project(topic):
+    app.route('/{}/'.format(topic[1]), endpoint=topic[1])(lambda: render_template('projects.html', key=topic))
 
-@app.route('/c-c++/')
-def c_page():
-    return render_template("projects.html", TOPIC_DICT=TOPIC_DICT, key="C/C++")
-
-@app.route('/web-development/')
-def web_dev():
-    return render_template("projects.html", TOPIC_DICT=TOPIC_DICT, key="Web Development")
-
-@app.route('/java/')
-def java():
-    return render_template("projects.html", TOPIC_DICT=TOPIC_DICT, key="Java")
+for key in TOPIC_DICT.keys():
+    create_project(key)
 
 @app.route('/luottokortti/')
 def luottokortti():

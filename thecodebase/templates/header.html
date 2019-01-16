@@ -19,10 +19,9 @@
                         Projects
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/python/">Python</a>
-                        <a class="dropdown-item" href="/java/">Java</a>
-                        <a class="dropdown-item" href="/web-development/">Web Development</a>
-                        <a class="dropdown-item" href="/c-c++/">C/C++</a>
+                        {% for key in TOPIC_DICT.keys() %}
+                        <a class="dropdown-item" href="/{{ key[1] }}/">{{ key[0] }}</a>
+                        {% endfor %}
                     </div>
                 </li>
                 <li class="nav-item">
