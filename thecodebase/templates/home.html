@@ -13,7 +13,7 @@
         {% for topic in TOPIC_DICT.keys() %}
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card" style="min-height:400px">
-              <img class="card-img-top img-fluid align-self-center m-4" src="{{ url_for('static', filename='images/python_logo.png') }}" alt="Card image cap" style="max-width: 10rem">
+              <img class="card-img-top img-fluid align-self-center m-4" src="{{ url_for('static', filename='images/%s' % topic[2]) }}" alt="Card image cap" style="max-width: 10rem">
                 <div class="card-body">
                   <h5 class="card-title">{{ topic[0] }}</h5>
                   <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
