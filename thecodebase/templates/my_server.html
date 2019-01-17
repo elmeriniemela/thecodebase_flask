@@ -3,24 +3,20 @@
 {% block body %}
 
 
-<div class="pt-4">
-  <div class="media">
-    <div class="media-body text-center">
-      <h3>My Server</h3>
-      <p>
+<div class="container pt-4 text-center">
+    <h3>My Server</h3>
+    <p>
         <a href="https://github.com/thecodebasesite/thecodebase" class="badge badge-light ">Github Repository</a>
-      </p>
-      <div class="row">
+    </p>
+    <div class="row">
         <div class="col-lg-6 col-md-12">
-          <img src="{{ url_for('static', filename='images/server_combined.jpg') }}" class="img-fluid float-center m-4" alt="Responsive image"/>
+            <img src="{{ url_for('static', filename='images/server_combined.jpg') }}" class="img-fluid float-center m-4" alt="Responsive image"/>
         </div>
         <div class="col-lg-6 col-md-12 mb-4">
-          <p class="m-4">
-            {% include 'projects/thecodebase.html' %}
-          </p>
+            <p class="m-4">
+                {% include 'projects/thecodebase.html' %}
+            </p>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 {% endblock %}
