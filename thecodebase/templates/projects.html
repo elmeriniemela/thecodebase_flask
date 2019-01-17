@@ -20,8 +20,6 @@
     {% for t in TOPIC_DICT[key] %}
     <div class="tab-pane fade mt-4 {{ 'show active' if t == TOPIC_DICT[key][0] }}" id="{{ t[1] }}" role="tabpanel" aria-labelledby="{{ t[1] }}-tab">
         <div class="container pt-4 text-center">
-            {% if t[3] %}
-            {% endif %}
             <h3>{{ t[0] }}</h3>
             <p>
                 <a href="https://github.com/thecodebasesite/{{ t[1] }}" class="badge badge-light ">Github Repository</a>
@@ -39,8 +37,8 @@
                 {% endif %}
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
 {% endif %}
     
