@@ -44,25 +44,25 @@ def Content():
             Project('Bemarifield', 'Bemarifield', 'bemarifield.html', 'bem1.png'),
             Project('Physics 2D', 'Physics', 'physics.html', 'physics.gif'),
 
-            Project('Odoo', 'odoo-portfolio', 'coming-soon.html', False),
+            Project('Odoo', 'odoo-portfolio', False, 'under_construction.png'),
         ],
         java : [
             Project('Tic Tac Toe', 'tic-tac-toe', 'tic-tac-toe.html', 'tic-tac-toe.png'),
-            Project('Game Of Life', 'game-of-life', 'coming-soon.html', False),
-            Project('Falling Sand', 'falling-sand', 'coming-soon.html', False),
-            Project('Asteroids', 'asteroids', 'coming-soon.html', False),
+            Project('Game Of Life', 'game-of-life', False, 'under_construction.png'),
+            Project('Falling Sand', 'falling-sand', False, 'under_construction.png'),
+            Project('Asteroids', 'asteroids', False, 'under_construction.png'),
         ],
         web_development : [
             Project('The Codebase', 'thecodebase', 'thecodebase.html', 'server_combined.jpg'),
-            Project('Django', 'django', 'coming-soon.html', False),
+            Project('Django', 'django', False, 'under_construction.png'),
         ],
         c_c_plus : [
             Project('C-practice', 'c-harjoitus', 'c-practice.html', 'c-practice.png'),
-            Project('Python C-extension', 'c-extension', 'coming-soon.html', False),
+            Project('Python C-extension', 'c-extension', False, 'under_construction.png'),
         ],
         javascript : [
-            Project('React.js', 'react-js', 'coming-soon.html', False),
-            Project('Bacon.js', 'bacon-js', 'coming-soon.html', False),
+            Project('React.js', 'react-js', False, 'under_construction.png'),
+            Project('Bacon.js', 'bacon-js', False, 'under_construction.png'),
         ]
     }
     
