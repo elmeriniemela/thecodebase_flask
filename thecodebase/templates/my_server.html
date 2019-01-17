@@ -1,27 +1,20 @@
 {% extends "main.html" %}
 
 {% block body %}
+
+
 <div class="pt-4">
         <div class="media">
-            <div class="media-body">
-                    <img  src="{{ url_for('static', filename='images/server_combined.jpg') }}" class="img-fluid float-right pl-2" ALIGN="right" style="max-width: 50%;" alt="Responsive image"/>
-                    <h3>My Server</h3>
-                    
-                    <p>This website is running on the laptop 
-                        (<a href="https://www.lenovo.com/fi/fi/laptops/thinkpad/t-series/ThinkPad-T480/p/22TP2TT4800">Lenovo ThinkPad T480</a>)
-                         shown in the pictures. It's build using python's Flask library and 
-                         <a href="https://getbootstrap.com/docs/4.1/getting-started/introduction/">Bootstrap v4.1.3.</a>
-                          I deployed it using the following instructions:
-                         <ul>
-                             <li>
-                                <a href="https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps">How To Deploy a Flask Application on an Ubuntu VPS</a>
-                             </li>
-                             <li>
-                                <a href="https://blog.mindorks.com/how-to-convert-your-laptop-desktop-into-a-server-and-host-internet-accessible-website-on-it-part-1-545940164ab9">How to convert your laptop/desktop into a server and host internet accessible website on it</a>
-                             </li>
-                         </ul>
-                    </p>
+            <div class="media-body text-center">
+                <img src="{{ url_for('static', filename='images/server_combined.jpg') }}" class="img-fluid float-right m-4" style="max-width: 50%;" alt="Responsive image"/>
+                <h3>My Server</h3>
+                <p>
+                  <a href="https://github.com/thecodebasesite/thecodebase" class="badge badge-light ">Github Repository</a>
+                </p>
+                <p class="m-4">
+                        {% include 'projects/thecodebase.html' %}
+                </p>
                 </div>
+              </div>
     </div>
-</div>
 {% endblock %}

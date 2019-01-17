@@ -3,9 +3,9 @@
 
 {% block body %}
 
-    <h1 class="display-4 p-2 pb-4">{{ key[0] }}</h1>
+    <h1 class="display-4 m-5 text-center">{{ key[0] }}</h1>
     {% if TOPIC_DICT[key] %}
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active text-dark" id="{{ TOPIC_DICT[key][0][1] }}-tab" data-toggle="tab" href="#{{ TOPIC_DICT[key][0][1] }}" role="tab" aria-controls="{{ TOPIC_DICT[key][0][1] }}" aria-selected="false">{{ TOPIC_DICT[key][0][0] }}</a>
         </li>
@@ -17,9 +17,25 @@
         {% endfor %}
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="{{ TOPIC_DICT[key][0][1] }}" role="tabpanel" aria-labelledby="{{ TOPIC_DICT[key][0][1] }}-tab">{% include 'projects/%s' % TOPIC_DICT[key][0][2] %}</div>
-        {% for t in TOPIC_DICT[key][1:] %}
-        <div class="tab-pane fade" id="{{ t[1] }}" role="tabpanel" aria-labelledby="{{ t[1] }}-tab">{% include 'projects/%s' % t[2] %}</div>
+        {% for t in TOPIC_DICT[key] %}
+        <div class="tab-pane fade mt-4 {{ 'show active' if t == TOPIC_DICT[key][0] }}" id="{{ t[1] }}" role="tabpanel" aria-labelledby="{{ t[1] }}-tab">
+                <div class="pt-4">
+                        <div class="media">
+                            <div class="media-body text-center">
+                                {% if t[3] %}
+                                <img src="{{ url_for('static', filename='images/%s' % t[3]) }}" class="img-fluid float-right m-4" style="max-width: 50%;" alt="Responsive image"/>
+                                {% endif %}
+                                <h3>{{ t[0] }}</h3>
+                                <p>
+                                  <a href="https://github.com/thecodebasesite/{{ t[1] }}" class="badge badge-light ">Github Repository</a>
+                                </p>
+                                <p class="m-4">
+                                        {% include 'projects/%s' % t[2] %}
+                                </p>
+                                </div>
+                              </div>
+                    </div>
+        </div>
         {% endfor %}
     </div>
     {% endif %}
