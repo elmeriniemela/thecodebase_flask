@@ -1,16 +1,13 @@
 {% extends "main.html" %}
 
 {% block body %}
-
-<div class="alert alert-light" role="alert">
-  <div class="container text-center" >
-    <h4 class="alert-heading">Welcome to The Codebase</h4>
-    <p>Here you can find my programming projects.</p>
-    <hr>
-    <a class="alert-light" href="http://thecodebase.site/"> <p class="mb-0">http://thecodebase.site/</p> </a>
-  </div>
+<div class="container text-center text-dark mb-4 mt-4" >
+  <h4>Welcome to The Codebase</h4>
+  <p>Here you can find my programming projects.</p>
+  <hr>
+  <a class="text-dark" href="http://thecodebase.site/"> <p class="mb-0">http://thecodebase.site/</p> </a>
 </div>
-
+  
 <div class="row">
         {% for topic in TOPIC_DICT.keys() %}
         <div class="col-lg-4 col-md-6 mb-4">
