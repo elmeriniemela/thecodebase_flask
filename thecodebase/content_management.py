@@ -29,7 +29,7 @@ def Content():
         title='C/C++', 
         url='C-C++', 
         image='c++.png',
-        description="I've studied the basics of C/C++. There's still alot I'd like to do with C++ for example rewrite some of the games I've made with pygame.",
+        description="I've studied the basics of C/C++. There's alot I'd like to do with C++ for example rewrite some of the games I've made with pygame.",
     )
     javascript = Topic(
         title='JavaScript', 
@@ -47,10 +47,10 @@ def Content():
             Project('Odoo', 'odoo-portfolio', False, 'under_construction.png'),
         ],
         java : [
+            Project('Game Of Life', 'game-of-life', 'game-of-life.html', 'game-of-life.gif'),
+            Project('Asteroids', 'asteroids', 'asteroids.html', 'asteroids.png'),
             Project('Tic Tac Toe', 'tic-tac-toe', 'tic-tac-toe.html', 'tic-tac-toe.png'),
-            Project('Game Of Life', 'game-of-life', False, 'under_construction.png'),
-            Project('Falling Sand', 'falling-sand', False, 'under_construction.png'),
-            Project('Asteroids', 'asteroids', False, 'under_construction.png'),
+            Project('Falling Sand', 'falling-sand', 'falling-sand.html', 'falling-sand.gif'),
         ],
         web_development : [
             Project('The Codebase', 'thecodebase', 'thecodebase.html', 'server_combined.jpg'),
