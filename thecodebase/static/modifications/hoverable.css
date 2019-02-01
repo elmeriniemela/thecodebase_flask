@@ -11,5 +11,11 @@
     margin-right: auto;
     width: 600px;
 }
-
-canvas {   display : block;   margin : auto; padding-top: 20px; }
+#canvas-container {
+    width: 100%;
+    text-align:center;
+ }
+ 
+ canvas {
+    display: inline;
+ }
