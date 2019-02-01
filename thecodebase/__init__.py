@@ -5,7 +5,6 @@ from content_management import Content
 import traceback, sys, os
 
 TOPIC_DICT = Content()
-current_dir = os.path.dirname(os.path.realpath(__file__))
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -34,11 +33,11 @@ def topic_dict_context():
 def homepage():
     return render_template("home.html", home=True)
 
-def create_project(topic):
+def create_topic(topic):
     app.route('/{}/'.format(topic[1]), endpoint=topic[1])(lambda: render_template('projects.html', key=topic, projects=True))
 
-for key in TOPIC_DICT.keys():
-    create_project(key)
+for key in TOPIC_DICT:
+    create_topic(key)
 
 @app.route('/luottokortti/')
 def luottokortti():
@@ -54,7 +53,12 @@ def about_me():
 
 @app.route('/download-cv/')
 def download_cv():
+    current_dir = os.path.dirname(os.path.realpath(__file__))
     return send_file(os.path.join(current_dir, 'docs', 'cv_elmeri.pdf'), attachment_filename='cv_elmeri.pdf')
+
+@app.route('/phaser-game/')
+def phaser_game():
+    return render_template("phaser-game.html")
 
 if __name__ == "__main__":
     app.run()

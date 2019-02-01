@@ -11,3 +11,5 @@
     margin-right: auto;
     width: 600px;
 }
+
+canvas {   display : block;   margin : auto; padding-top: 20px; }

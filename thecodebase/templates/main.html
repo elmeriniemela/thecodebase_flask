@@ -5,9 +5,12 @@
 	<title>The Codebase</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-	<!-- <link href="{{ url_for('static', filename='css/materialize.min.css') }}" rel="stylesheet"> -->
 	<link href="{{ url_for('static', filename='modifications/hoverable.css') }}" rel="stylesheet">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	{% block head %}{% endblock %}
+
+
+
 </head>
 
 <header>
@@ -16,12 +19,13 @@
 
 
 <body>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
 		<div class="container mt-4" style="margin-bottom: 200px;">
 			{% block body %}{% endblock %}
 		</div>
 
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 	
 </body>
 
