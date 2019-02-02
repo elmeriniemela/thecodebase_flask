@@ -40,21 +40,17 @@ def Content():
 
     return {
         python : [
+            Project('Odoo', 'odoo', 'odoo.html', 'odoo.jpg'),
             Project('Tower Defence', 'TowerDefence', 'tdgame.html', 'tdgame.png'),
             Project('Bemarifield', 'Bemarifield', 'bemarifield.html', 'bem1.png'),
             Project('Physics 2D', 'Physics', 'physics.html', 'physics.gif'),
 
-            Project('Odoo', 'odoo-portfolio', False, 'under_construction.png'),
         ],
         java : [
             Project('Game Of Life', 'game-of-life', 'game-of-life.html', 'game-of-life.gif'),
             Project('Asteroids', 'asteroids', 'asteroids.html', 'asteroids.png'),
             Project('Tic Tac Toe', 'tic-tac-toe', 'tic-tac-toe.html', 'tic-tac-toe.png'),
             Project('Falling Sand', 'falling-sand', 'falling-sand.html', 'falling-sand.gif'),
-        ],
-        web_development : [
-            Project('The Codebase', 'thecodebase', 'thecodebase.html', 'server_combined.jpg'),
-            Project('Django', 'django', False, 'under_construction.png'),
         ],
         c_c_plus : [
             Project('C-practice', 'c-harjoitus', 'c-practice.html', 'c-practice.png'),
@@ -63,6 +59,10 @@ def Content():
         javascript : [
             Project('React.js', 'react-js', False, 'under_construction.png'),
             Project('Bacon.js', 'bacon-js', False, 'under_construction.png'),
-        ]
+        ],
+        web_development : [
+            Project('The Codebase', 'thecodebase', 'thecodebase.html', 'server_combined.jpg'),
+            Project('Django', 'django', False, 'under_construction.png'),
+        ],
     }
     

@@ -2,3 +2,4 @@ thecodebase/venv/**/*
 *.pyc
 .vscode/*
 !thecodebase/static
+thecodebase/credentials.json

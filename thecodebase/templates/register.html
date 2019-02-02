@@ -1,0 +1,23 @@
+
+
+{% extends "main.html" %}
+
+{% block body %}
+
+
+<div class="container text-center mt-5">
+    
+    <form class="form-signin" role="form" autocomplete="off">
+        <img class="mb-4" src="{{ url_for('static', filename='images/mainlogo.png') }}" alt="" style="max-height: 72px;">
+        <h1 class="h3 mb-4 font-weight-normal">Register</h1>
+        <input type="text" class="form-control" id="inputName" placeholder="Username" required autofocus>
+        <input type="text" class="form-control" id="inputEmail3" placeholder="Email address" required>
+        <input type="password" class="form-control" id="inputPassword3" placeholder="Password" title="At least 6 characters with letters and numbers" required>
+        <input type="password" class="form-control" id="inputVerify3" placeholder="Retype password" required>
+        <button type="submit" class="btn btn-lg btn-secondary btn-block">Register</button>
+    </form>
+    <p>Already registered? <a href="/login/">Sign in</a></p>
+    <p>{{ error }}</p>
+</div>
+
+{% endblock %}

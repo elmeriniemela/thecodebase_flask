@@ -1,7 +1,9 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, request, url_for, redirect, flash
 from flask import Markup, send_file
 
 from content_management import Content
+from dbconnect import connection
+
 import traceback, sys, os
 
 TOPIC_DICT = Content()
@@ -39,9 +41,6 @@ def create_topic(topic):
 for key in TOPIC_DICT:
     create_topic(key)
 
-@app.route('/luottokortti/')
-def luottokortti():
-    return render_template("luottokortti.html")
 
 @app.route('/my-server/')
 def my_server():
@@ -58,13 +57,31 @@ def download_cv():
 
 @app.route('/eat-game/')
 def eat_game():
-    return render_template("eat-game.html", eat_game=True)
+    return render_template("eat-game.html", game=True)
 
 @app.route('/platform-game/')
 def platform_game():
-    return render_template("platform-game.html", platform_game=True)
+    return render_template("platform-game.html", game=True)
 
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
 
+        if email == 'admin' and password == 'pass':
+            flash("Succesful login!")
+            return redirect(url_for('homepage'))
+
+        else:
+            return render_template("login.html", error="Invalid credentials", signing=True)
+
+    return render_template("login.html", signing=True)
+
+@app.route('/register/', methods=["GET","POST"])
+def register():
+    c, conn = connection()
+    return render_template("register.html", signing=True)
 
 
 if __name__ == "__main__":
