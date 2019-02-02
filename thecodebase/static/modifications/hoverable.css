@@ -11,11 +11,3 @@
     margin-right: auto;
     width: 600px;
 }
-#canvas-container {
-    width: 100%;
-    text-align:center;
- }
- 
- canvas {
-    display: inline;
- }

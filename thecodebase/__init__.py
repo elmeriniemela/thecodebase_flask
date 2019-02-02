@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from flask import Markup, send_file
 
 from content_management import Content
@@ -56,9 +56,16 @@ def download_cv():
     current_dir = os.path.dirname(os.path.realpath(__file__))
     return send_file(os.path.join(current_dir, 'docs', 'cv_elmeri.pdf'), attachment_filename='cv_elmeri.pdf')
 
-@app.route('/phaser-game/')
-def phaser_game():
-    return render_template("phaser-game.html")
+@app.route('/eat-game/')
+def eat_game():
+    return render_template("eat-game.html", eat_game=True)
+
+@app.route('/platform-game/')
+def platform_game():
+    return render_template("platform-game.html", platform_game=True)
+
+
+
 
 if __name__ == "__main__":
     app.run()

@@ -36,11 +36,11 @@ var gamePlay = new Phaser.Class({
     // Preload images
     this.load.image(
       "sky",
-      "https://raw.githubusercontent.com/cattsmall/Phaser-game/5-2014-game/assets/sky.png"
+      '/static/eat-game/assets/sky.png',
     );
     this.load.spritesheet(
       "dude",
-      "https://raw.githubusercontent.com/cattsmall/Phaser-game/5-2014-game/assets/dude.png",
+      '/static/eat-game/assets/dude.png',
       {
         frameWidth: 32,
         frameHeight: 48
@@ -48,7 +48,7 @@ var gamePlay = new Phaser.Class({
     );
     this.load.spritesheet(
       "baddie",
-      "https://raw.githubusercontent.com/cattsmall/Phaser-game/5-2014-game/assets/baddie.png",
+      '/static/eat-game/assets/baddie.png',
       {
         frameWidth: 32,
         frameHeight: 32
