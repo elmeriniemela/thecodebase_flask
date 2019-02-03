@@ -27,7 +27,7 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
-  button {
+  .form-signin button {
     margin-top: 25px;
     padding: 0;
   }
