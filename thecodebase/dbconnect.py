@@ -10,7 +10,7 @@ def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = credentials[0],
                            passwd = credentials[1],
-                           db = "thecodebase")
+                           db = credentials[0])
     c = conn.cursor()
 
     return c, conn
