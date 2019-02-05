@@ -77,13 +77,15 @@ def session_loggedin(username, uid):
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
+        email_username = request.form['emailUsername']
         password = request.form['password']
         c, conn = connection()
 
-        found = c.execute("SELECT uid, username, password FROM users WHERE email=({})".format(esc(conn, email)))
+        found = c.execute("SELECT uid, username, password FROM users WHERE email=({}) OR username=({})".format(
+            esc(conn, email_username), esc(conn, email_username)
+        ))
         if not found:
-            flash("Email not registered")
+            flash("Email/Username not registered")
             return render_template("login.html", signing=True, form=request.form)
 
         data = c.fetchone()
