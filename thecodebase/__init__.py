@@ -181,13 +181,13 @@ def url_value_preprocessor(endpoint, values):
 
     data = {
         'time': str(datetime.now()),
-        'remote_addr': request.remote_addr,
+        'remote_addr': request.environ.get('HTTP_X_REAL_IP', request.environ['REMOTE_ADDR']),
     }
 
     if endpoint:
         data.update({'endpoint': endpoint})
 
-    if 'logged_in' in session:
+    if 'logged_in' in session and 'uid' in session:
         data.update({'uid': session['uid']})
 
 
