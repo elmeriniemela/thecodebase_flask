@@ -6,25 +6,25 @@
 
     <link href="{{ url_for('static', filename='modifications/login.css') }}" rel="stylesheet">
 
+
 {% endblock %}
 
 
 {% block body %}
-
+        
 
 <div class="container text-center mt-5">
-    
-    <form class="form-signin" role="form" autocomplete="off">
+    <form class="form-signin" role="form" autocomplete="off" method="post">
         <img class="mb-4" src="{{ url_for('static', filename='images/mainlogo.png') }}" alt="" style="max-height: 72px;">
         <h1 class="h3 mb-4 font-weight-normal">Register</h1>
-        <input type="text" class="form-control" id="inputName" placeholder="Username" required autofocus>
-        <input type="text" class="form-control" id="inputEmail3" placeholder="Email address" required>
-        <input type="password" class="form-control" id="inputPassword3" placeholder="Password" title="At least 6 characters with letters and numbers" required>
-        <input type="password" class="form-control" id="inputVerify3" placeholder="Retype password" required>
+        <input value="{{ form['username'] if form }}" name="username" type="text" class="form-control" id="inputName" placeholder="Username" required autofocus></input>
+        <input value="{{ form['email'] if form }}" name="email" type="text" class="form-control" id="inputEmail" placeholder="Email address" required>
+        <input value="{{ form['password'] if form }}" name="password" type="password" class="form-control" id="inputPassword" placeholder="Password" title="At least 6 characters with letters and numbers" required>
+        <input value="{{ form['confirmPassword'] if form }}" name="confirmPassword" type="password" class="form-control" id="inputVerify" placeholder="Retype password" required>
         <button type="submit" class="btn btn-lg btn-secondary btn-block">Register</button>
     </form>
     <p>Already registered? <a href="/login/">Sign in</a></p>
-    <p>{{ error }}</p>
 </div>
 
+<script type="text/javascript" src="{{ url_for('static', filename='modifications/validator.js') }}"></script>
 {% endblock %}

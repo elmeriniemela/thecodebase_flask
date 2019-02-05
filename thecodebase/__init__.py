@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, url_for, redirect, flash
+from flask import Flask, render_template, request, url_for, redirect, flash, session
 from flask import Markup, send_file
 
 from content_management import Content
 from dbconnect import connection
 
+from passlib.hash import sha256_crypt
+import gc
 import traceback, sys, os
 
 TOPIC_DICT = Content()
@@ -68,20 +70,81 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        c, conn = connection()
 
-        if email == 'admin' and password == 'pass':
-            flash("Succesful login!")
-            return redirect(url_for('homepage'))
+        found = c.execute("SELECT username, password FROM users WHERE email=({})".format(esc(conn, email)))
+        if not found:
+            flash("Email not registered")
+            return render_template("login.html", signing=True, form=request.form)
 
-        else:
-            return render_template("login.html", error="Invalid credentials", signing=True)
+        data = c.fetchone()
+        username, passwd_hash = data
+
+        if not sha256_crypt.verify(password, passwd_hash):
+            flash("Invalid password")
+            return render_template("login.html", signing=True, form=request.form)
+
+
+        session['logged_in'] = True
+        session['username'] = username
+
+        flash("Succesful login!")
+        return redirect(url_for('homepage'))
 
     return render_template("login.html", signing=True)
 
-@app.route('/register/', methods=["GET","POST"])
+def esc(conn, string):
+    return conn.escape(string.encode('utf-8')).decode('utf-8')
+
+
+@app.route('/register/', methods=["GET", "POST"])
 def register():
-    c, conn = connection()
+    if request.method == 'POST':
+
+        username = request.form['username']
+        email = request.form['email']
+        password = sha256_crypt.encrypt(request.form['password'])
+        confirm_pass = request.form['confirmPassword']
+
+        # If javascript validation fails
+        if not sha256_crypt.verify(confirm_pass, password):
+            flash("Passwords don't match!")
+            return render_template("register.html", signing=True, form=request.form)
+
+        del confirm_pass
+
+
+        c, conn = connection()
+
+        username_exists = c.execute("SELECT * FROM users WHERE username = ({})".format(esc(conn, username)))
+        email_exists = c.execute("SELECT * FROM users WHERE email = ({})".format(esc(conn, email)))
+
+
+        if username_exists:
+            flash("Username already exists!")
+            return render_template("register.html", signing=True, form=request.form)
+
+
+        if email_exists:
+            flash("Email already exists!")
+            return render_template("register.html", signing=True, form=request.form)
+
+        c.execute("INSERT INTO users (username, password, email, tracking) VALUES ({}, {}, {}, {})".format(
+            esc(conn, username), esc(conn, password), esc(conn, email), esc(conn, '/')
+        ))
+        conn.commit()
+        c.close()
+        conn.close()
+        gc.collect()
+
+        flash("Thanks for registering!")
+        session['logged_in'] = True
+        session['username'] = username
+        return redirect(url_for('homepage'))
+
     return render_template("register.html", signing=True)
+
+
 
 
 if __name__ == "__main__":
