@@ -7,6 +7,8 @@ from dbconnect import connection
 from passlib.hash import sha256_crypt
 import gc
 import traceback, sys, os
+from functools import wraps
+from datetime import datetime
 
 TOPIC_DICT = Content()
 
@@ -65,6 +67,13 @@ def eat_game():
 def platform_game():
     return render_template("platform-game.html", game=True)
 
+
+def session_loggedin(username, uid):
+    session['logged_in'] = True
+    session['username'] = username
+    session['uid'] = uid
+
+
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -72,21 +81,20 @@ def login():
         password = request.form['password']
         c, conn = connection()
 
-        found = c.execute("SELECT username, password FROM users WHERE email=({})".format(esc(conn, email)))
+        found = c.execute("SELECT uid, username, password FROM users WHERE email=({})".format(esc(conn, email)))
         if not found:
             flash("Email not registered")
             return render_template("login.html", signing=True, form=request.form)
 
         data = c.fetchone()
-        username, passwd_hash = data
+        uid, username, passwd_hash = data
 
         if not sha256_crypt.verify(password, passwd_hash):
             flash("Invalid password")
             return render_template("login.html", signing=True, form=request.form)
 
 
-        session['logged_in'] = True
-        session['username'] = username
+        session_loggedin(username, uid)
 
         flash("Succesful login!")
         return redirect(url_for('homepage'))
@@ -138,13 +146,60 @@ def register():
         gc.collect()
 
         flash("Thanks for registering!")
-        session['logged_in'] = True
-        session['username'] = username
+        session_loggedin(username, c.lastrowid)
+    
         return redirect(url_for('homepage'))
 
     return render_template("register.html", signing=True)
 
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash("You need to login first")
+            return redirect(url_for('login'))
 
+    return wrap
+
+
+
+@app.route("/logout/")
+@login_required
+def logout():
+    session.clear()
+    flash("You have been logged out!")
+    gc.collect()
+    return redirect(url_for('homepage'))
+
+
+@app.url_value_preprocessor
+def url_value_preprocessor(endpoint, values):
+    if endpoint == 'static':
+        return
+
+    data = {
+        'time': str(datetime.now()),
+        'remote_addr': request.remote_addr,
+    }
+
+    if endpoint:
+        data.update({'endpoint': endpoint})
+
+    if 'logged_in' in session:
+        data.update({'uid': session['uid']})
+
+
+    placeholders = ', '.join(['%s'] * len(data))
+    columns = ', '.join(data.keys())
+    sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % ('visits', columns, placeholders)
+    c, conn = connection()
+    c.execute(sql, data.values())
+    conn.commit()
+    c.close()
+    conn.close()
+    gc.collect()
 
 
 if __name__ == "__main__":

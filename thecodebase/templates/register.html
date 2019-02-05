@@ -18,7 +18,7 @@
         <img class="mb-4" src="{{ url_for('static', filename='images/mainlogo.png') }}" alt="" style="max-height: 72px;">
         <h1 class="h3 mb-4 font-weight-normal">Register</h1>
         <input value="{{ form['username'] if form }}" name="username" type="text" class="form-control" id="inputName" placeholder="Username" required autofocus></input>
-        <input value="{{ form['email'] if form }}" name="email" type="text" class="form-control" id="inputEmail" placeholder="Email address" required>
+        <input value="{{ form['email'] if form }}" name="email" type="email" class="form-control" id="inputEmail" placeholder="Email address" required>
         <input value="{{ form['password'] if form }}" name="password" type="password" class="form-control" id="inputPassword" placeholder="Password" title="At least 6 characters with letters and numbers" required>
         <input value="{{ form['confirmPassword'] if form }}" name="confirmPassword" type="password" class="form-control" id="inputVerify" placeholder="Retype password" required>
         <button type="submit" class="btn btn-lg btn-secondary btn-block">Register</button>
