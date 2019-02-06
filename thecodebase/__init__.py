@@ -21,7 +21,8 @@ def login_required(f):
         if 'logged_in' in session:
             return f(*args, **kwargs)
         else:
-            flash("You need to login first")
+            message = Markup('You need to login first. New user? Register <a href="/register/">here.</a> It only takes a few seconds.')
+            flash(message)
             session['endpoint'] = request.endpoint
             return redirect(url_for('login'))
 
