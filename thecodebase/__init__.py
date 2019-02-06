@@ -23,7 +23,10 @@ def login_required(f):
         else:
             message = Markup('You need to login first. New user? Register <a href="/register/">here.</a> It only takes a few seconds.')
             flash(message)
-            session['endpoint'] = request.endpoint
+            if request.endpoint not in ['login', 'register']:
+                session['endpoint'] = request.endpoint
+            else:
+                session['endpoint'] = session.get('endpoint', 'homepage')
             return redirect(url_for('login'))
 
     return wrap
