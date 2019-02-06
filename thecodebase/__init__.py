@@ -22,6 +22,7 @@ def login_required(f):
             return f(*args, **kwargs)
         else:
             flash("You need to login first")
+            session['endpoint'] = request.endpoint
             return redirect(url_for('login'))
 
     return wrap
@@ -117,7 +118,8 @@ def login():
         session_loggedin(username, uid)
 
         flash("Succesful login!")
-        return redirect(url_for('homepage'))
+        endpoint = session.get('endpoint', 'homepage')
+        return redirect(url_for(endpoint))
 
     return render_template("login.html", signing=True)
 
@@ -167,8 +169,8 @@ def register():
 
         flash("Thanks for registering!")
         session_loggedin(username, c.lastrowid)
-    
-        return redirect(url_for('homepage'))
+        endpoint = session.get('endpoint', 'homepage')
+        return redirect(url_for(endpoint))
 
     return render_template("register.html", signing=True)
 
