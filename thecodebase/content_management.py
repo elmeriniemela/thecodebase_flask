@@ -42,7 +42,7 @@ def Content():
         python : [
             Project('Odoo', 'odoo', 'odoo.html', 'odoo.jpg'),
             Project('Tower Defence', 'TowerDefence', 'tdgame.html', 'tdgame.png'),
-            Project('Bemarifield', 'Bemarifield', 'bemarifield.html', 'bem1.png'),
+            Project('Bemarifield', 'Bemarifield', 'bemarifield.html', 'bemarifield.png'),
             Project('Physics 2D', 'Physics', 'physics.html', 'physics.gif'),
 
         ],
