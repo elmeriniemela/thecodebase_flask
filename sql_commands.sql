@@ -1,5 +1,6 @@
 CREATE DATABASE thecodebase;
 
+show tables;
 
 USE thecodebase;
 
