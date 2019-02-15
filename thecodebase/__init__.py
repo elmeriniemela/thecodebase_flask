@@ -104,9 +104,9 @@ def login():
         password = request.form['password']
         c, conn = connection()
 
-        found = c.execute("SELECT uid, username, password FROM users WHERE email=({}) OR username=({})".format(
-            esc(conn, email_username), esc(conn, email_username)
-        ))
+        found = c.execute("SELECT uid, username, password FROM users WHERE email=(%s) OR username=(%s)",
+            (email_username, email_username,)
+        )
         if not found:
             flash("Email/Username not registered")
             return render_template("login.html", signing=True, form=request.form)
@@ -127,9 +127,6 @@ def login():
 
     return render_template("login.html", signing=True)
 
-def esc(conn, string):
-    return conn.escape(string.encode('utf-8')).decode('utf-8')
-
 
 @app.route('/register/', methods=["GET", "POST"])
 def register():
@@ -149,9 +146,8 @@ def register():
 
 
         c, conn = connection()
-
-        username_exists = c.execute("SELECT * FROM users WHERE username = ({})".format(esc(conn, username)))
-        email_exists = c.execute("SELECT * FROM users WHERE email = ({})".format(esc(conn, email)))
+        username_exists = c.execute("SELECT * FROM users WHERE username = (%s)", (username,))
+        email_exists = c.execute("SELECT * FROM users WHERE email = (%s)", (email,))
 
 
         if username_exists:
@@ -163,9 +159,9 @@ def register():
             flash("Email already exists!")
             return render_template("register.html", signing=True, form=request.form)
 
-        c.execute("INSERT INTO users (username, password, email, tracking) VALUES ({}, {}, {}, {})".format(
-            esc(conn, username), esc(conn, password), esc(conn, email), esc(conn, '/')
-        ))
+        c.execute("INSERT INTO users (username, password, email, tracking) VALUES (%s, %s, %s, %s)",
+            (username, password, email, '/',)
+        )
         conn.commit()
         c.close()
         conn.close()
