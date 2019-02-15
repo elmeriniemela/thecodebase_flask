@@ -114,6 +114,10 @@ def login():
         data = c.fetchone()
         uid, username, passwd_hash = data
 
+        c.close()
+        conn.close()
+        gc.collect()
+
         if not sha256_crypt.verify(password, passwd_hash):
             flash("Invalid password")
             return render_template("login.html", signing=True, form=request.form)
