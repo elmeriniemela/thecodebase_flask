@@ -60,6 +60,7 @@ def Content():
             Project('jQuery', 'jquery', False, 'under_construction.png'),
             Project('React.js', 'react-js', False, 'under_construction.png'),
             Project('Node.js', 'node-js', False, 'under_construction.png'),
+            Project('Phaser.js', 'phaser-js', False, 'under_construction.png'),
             Project('Bacon.js', 'bacon-js', False, 'under_construction.png'),
             
         ],
