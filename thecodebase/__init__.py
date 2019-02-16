@@ -2,13 +2,14 @@ from flask import Flask, render_template, request, url_for, redirect, flash, ses
 from flask import Markup, send_file
 
 from content_management import Content
-from dbconnect import connection
+from dbconnect import Cursor
 
 from passlib.hash import sha256_crypt
 import gc
 import traceback, sys, os
 from functools import wraps
 from datetime import datetime
+import json
 
 TOPIC_DICT = Content()
 
@@ -102,22 +103,17 @@ def login():
     if request.method == 'POST':
         email_username = request.form['emailUsername']
         password = request.form['password']
-        c, conn = connection()
+        with Cursor() as cur:
+            found = cur.execute("SELECT uid, username, password FROM users WHERE email=(%s) OR username=(%s)",
+                (email_username, email_username,)
+            )
+            if not found:
+                flash("Email/Username not registered")
+                return render_template("login.html", signing=True, form=request.form)
 
-        found = c.execute("SELECT uid, username, password FROM users WHERE email=(%s) OR username=(%s)",
-            (email_username, email_username,)
-        )
-        if not found:
-            flash("Email/Username not registered")
-            return render_template("login.html", signing=True, form=request.form)
+            data = cur.fetchone()
 
-        data = c.fetchone()
         uid, username, passwd_hash = data
-
-        c.close()
-        conn.close()
-        gc.collect()
-
         if not sha256_crypt.verify(password, passwd_hash):
             flash("Invalid password")
             return render_template("login.html", signing=True, form=request.form)
@@ -149,9 +145,9 @@ def register():
         del confirm_pass
 
 
-        c, conn = connection()
-        username_exists = c.execute("SELECT * FROM users WHERE username = (%s)", (username,))
-        email_exists = c.execute("SELECT * FROM users WHERE email = (%s)", (email,))
+        with Cursor() as cur:
+            username_exists = cur.execute("SELECT * FROM users WHERE username = (%s)", (username,))
+            email_exists = cur.execute("SELECT * FROM users WHERE email = (%s)", (email,))
 
 
         if username_exists:
@@ -163,16 +159,14 @@ def register():
             flash("Email already exists!")
             return render_template("register.html", signing=True, form=request.form)
 
-        c.execute("INSERT INTO users (username, password, email, tracking) VALUES (%s, %s, %s, %s)",
-            (username, password, email, '/',)
-        )
-        conn.commit()
-        c.close()
-        conn.close()
-        gc.collect()
+        with Cursor() as cur:
+            cur.execute("INSERT INTO users (username, password, email, tracking) VALUES (%s, %s, %s, %s)",
+                (username, password, email, '/',)
+            )
+            uid = cur.lastrowid
 
         flash("Thanks for registering!")
-        session_loggedin(username, c.lastrowid)
+        session_loggedin(username, uid)
         endpoint = session.get('endpoint', 'homepage')
         return redirect(url_for(endpoint))
 
@@ -206,17 +200,25 @@ def url_value_preprocessor(endpoint, values):
     if 'logged_in' in session and 'uid' in session:
         data.update({'uid': session['uid']})
 
-
     placeholders = ', '.join(['%s'] * len(data))
     columns = ', '.join(data.keys())
     sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % ('visits', columns, placeholders)
-    c, conn = connection()
-    c.execute(sql, data.values())
-    conn.commit()
-    c.close()
-    conn.close()
-    gc.collect()
 
+    with Cursor() as cur:
+        cur.execute(sql, data.values())
+
+
+
+@app.route('/high-score')
+def send_high_score():
+    return json.dumps({'foo':'bar'})
+
+@app.route('/post-score', methods=['POST'])
+def posted_score():
+    score = request.form['score']
+
+    print(score)
+    return score
 
 if __name__ == "__main__":
     app.run()
