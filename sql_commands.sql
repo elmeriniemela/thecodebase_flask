@@ -28,3 +28,11 @@ CREATE TABLE visits (
 GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' IDENTIFIED BY 'password';
 
 SET PASSWORD FOR 'username'@'localhost' = PASSWORD('password');
+
+CREATE TABLE Score (
+    score_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    uid INT,
+    time DATETIME,
+    score INT,
+    FOREIGN KEY (uid) REFERENCES users(uid)
+);

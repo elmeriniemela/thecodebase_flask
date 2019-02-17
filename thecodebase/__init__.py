@@ -211,13 +211,30 @@ def url_value_preprocessor(endpoint, values):
 
 @app.route('/high-score')
 def send_high_score():
-    return json.dumps({'foo':'bar'})
+    sql = """
+    SELECT username, score, time FROM Score
+    JOIN users ON users.uid = Score.uid
+    ORDER BY score DESC
+    """
+
+    with Cursor() as cur:
+        cur.execute(sql)
+        data = cur.fetchmany(10)
+
+    data_dict = []
+    for line in data:
+        username, score, date = line
+        data_dict.append([username.replace('ä', 'a').replace('ö', 'o'), score, str(date)])
+
+    return json.dumps(data_dict)
 
 @app.route('/post-score', methods=['POST'])
 def posted_score():
     score = request.form['score']
-
-    print(score)
+    with Cursor() as cur:
+        cur.execute("INSERT INTO Score (score, uid, time) VALUES (%s, %s, %s)", 
+            (score, session.get('uid'), datetime.now(),)
+        )
     return score
 
 if __name__ == "__main__":

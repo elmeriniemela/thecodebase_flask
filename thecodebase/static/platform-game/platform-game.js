@@ -71,6 +71,12 @@ function create ()
     });
 
     bombs = this.physics.add.group();
+    var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+    var bomb = bombs.create(x, 16, 'bomb');
+    bomb.setBounce(1);
+    bomb.setCollideWorldBounds(true);
+    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+    bomb.allowGravity = false;
 
     //  The score
     scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
@@ -145,6 +151,8 @@ function collectStar (player, star)
 
     }
 
+    
+
 }
 
 function hitBomb (player, bomb)
@@ -156,14 +164,53 @@ function hitBomb (player, bomb)
     player.anims.play('turn');
 
     gameOver = true;
+    var rankX = 100;
+    var nameX = 400;
+    var scoreX = 700;
 
-    
+    var startY = 70;
+    var stepY = 40;
+    // this.add.bitmapText(startX, startY, 'arcade', 'RANK  NAME  SCORE').setTint(0xff00ff);
+    text = this.add.bitmapText(0, startY, 'arcade', 'RANK').setTint(0xff00ff);
+    text.setX(rankX - text.width / 2);
+
+    text = this.add.bitmapText(0, startY, 'arcade', 'NAME').setTint(0xff00ff);
+    text.setX(nameX - text.width / 2);
+
+    text = this.add.bitmapText(0, startY, 'arcade', 'SCORE').setTint(0xff00ff);
+    text.setX(scoreX - text.width / 2);
+    startY += 20;
+
     $.post( "/post-score", {
         score: score 
     });
+    
+    var scoreLines;
 
-    $.get("/high-score", function(data) {
-        console.log($.parseJSON(data))
-    })
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: '/high-score',
+        success: function(data) {
+             scoreLines = $.parseJSON(data);
+        }
+    });
+    
+    var rank = 1;
+    for (var i = 0; i < scoreLines.length; i++) {
+        var line = scoreLines[i];
+        var y = startY + (rank * stepY);
+        text = this.add.bitmapText(0, y, 'arcade', rank).setTint(0xff00ff);
+        text.setX(rankX - text.width / 2);
+
+        text = this.add.bitmapText(0, y, 'arcade', line[0]).setTint(0xff00ff);
+        text.setX(nameX - text.width / 2);
+
+        text = this.add.bitmapText(0, y, 'arcade', line[1]).setTint(0xff00ff);
+        text.setX(scoreX - text.width / 2);
+
+
+        rank++;
+    }
     
 }

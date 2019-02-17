@@ -8,4 +8,6 @@ function preload ()
         '/static/platform-game/assets/dude.png',
         { frameWidth: 32, frameHeight: 48 }
     );
+
+    this.load.bitmapFont('arcade', '/static/platform-game/assets/fonts/bitmap/arcade.png', '/static/platform-game/assets/fonts/bitmap/arcade.xml');
 }
