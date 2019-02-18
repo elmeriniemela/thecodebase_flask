@@ -188,11 +188,11 @@ class GamePlay extends Phaser.Scene {
             data: {
                 score: this.score 
             },
-            success: this.createMenu
+            success: this.createLeaderboard
         });
     }
 
-    createMenu(data) 
+    createLeaderboard(data) 
     {
         var rankX = 100;
         var nameX = 400;
@@ -201,15 +201,10 @@ class GamePlay extends Phaser.Scene {
         var startY = 70;
         var stepY = 40;
         
-        var text;
-        text = this.add.bitmapText(0, startY, 'arcade', 'RANK').setTint(0xff00ff);
-        text.setX(rankX - text.width / 2);
+        this.addText(rankX, startY, 'RANK');
+        this.addText(nameX, startY, 'NAME');
+        this.addText(scoreX, startY, 'SCORE');
 
-        text = this.add.bitmapText(0, startY, 'arcade', 'NAME').setTint(0xff00ff);
-        text.setX(nameX - text.width / 2);
-
-        text = this.add.bitmapText(0, startY, 'arcade', 'SCORE').setTint(0xff00ff);
-        text.setX(scoreX - text.width / 2);
         startY += 20;
 
         var scoreLines = $.parseJSON(data)
@@ -218,18 +213,17 @@ class GamePlay extends Phaser.Scene {
         for (var i = 0; i < scoreLines.length; i++) {
             var line = scoreLines[i];
             var y = startY + (rank * stepY);
-            text = this.add.bitmapText(0, y, 'arcade', rank).setTint(0xff00ff);
-            text.setX(rankX - text.width / 2);
 
-            text = this.add.bitmapText(0, y, 'arcade', line[0]).setTint(0xff00ff);
-            text.setX(nameX - text.width / 2);
-
-            text = this.add.bitmapText(0, y, 'arcade', line[1]).setTint(0xff00ff);
-            text.setX(scoreX - text.width / 2);
-
+            this.addText(rankX, y, rank);
+            this.addText(nameX, y, line[0]);
+            this.addText(scoreX, y, line[1]);
 
             rank++;
         }
+    }
+    addText(x, y, text) 
+    {
+        this.add.bitmapText(x, y, 'arcade', text).setTint(0xff00ff).setOrigin(0.5, 0);
     }
 }
 
