@@ -6,6 +6,7 @@ class GamePlay extends Phaser.Scene {
         super('GamePlay')
         this.score = 0;
         this.gameOver = false;
+        this.menuTexts = new Array();
     }
 
     preload ()
@@ -110,6 +111,9 @@ class GamePlay extends Phaser.Scene {
     {
         if (this.gameOver)
         {
+            if (this.cursors.space.isDown) {
+                this.restart();
+            }
             return;
         }
 
@@ -148,24 +152,26 @@ class GamePlay extends Phaser.Scene {
 
         if (this.stars.countActive(true) === 0)
         {
-            //  A new batch of this.stars to collect
-            this.stars.children.iterate(function (child) {
-
-                child.enableBody(true, child.x, 0, true, true);
-
-            });
-
-            var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-            var bomb = this.bombs.create(x, 16, 'bomb');
-            bomb.setBounce(1);
-            bomb.setCollideWorldBounds(true);
-            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-            bomb.allowGravity = false;
-
+            this.refreshLevel();
         }
+    }
 
-        
+    refreshLevel()
+    {
+        //  A new batch of this.stars to collect
+        this.stars.children.iterate(function (child) {
+
+            child.enableBody(true, child.x, 0, true, true);
+
+        });
+
+        var x = (this.player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+        var bomb = this.bombs.create(x, 16, 'bomb');
+        bomb.setBounce(1);
+        bomb.setCollideWorldBounds(true);
+        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        bomb.allowGravity = false;
 
     }
 
@@ -192,6 +198,27 @@ class GamePlay extends Phaser.Scene {
         });
     }
 
+    restart() 
+    {
+        for (let i = 0; i < this.menuTexts.length; i++) {
+            this.menuTexts[i].destroy()
+        }
+        this.menuTexts = new Array();
+        this.gameOver = false;
+        this.physics.resume();
+        this.score = 0;
+        this.scoreText.setText('Score: ' + this.score);
+        this.bombs.children.iterate(function (child) {
+            child.destroy();
+        });
+        
+        this.bombs.clear(true);
+        this.player.x = 100;
+        this.player.y = 450;
+        this.player.clearTint();
+        this.refreshLevel();
+    }
+
     createLeaderboard(data) 
     {
         var rankX = 100;
@@ -200,7 +227,7 @@ class GamePlay extends Phaser.Scene {
 
         var startY = 70;
         var stepY = 40;
-        
+        this.addText(400, 20, 'PRESS SPACE');
         this.addText(rankX, startY, 'RANK');
         this.addText(nameX, startY, 'NAME');
         this.addText(scoreX, startY, 'SCORE');
@@ -223,7 +250,7 @@ class GamePlay extends Phaser.Scene {
     }
     addText(x, y, text) 
     {
-        this.add.bitmapText(x, y, 'arcade', text).setTint(0xff00ff).setOrigin(0.5, 0);
+        this.menuTexts.push(this.add.bitmapText(x, y, 'arcade', text).setTint(0xff00ff).setOrigin(0.5, 0));
     }
 }
 
