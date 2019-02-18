@@ -9,11 +9,7 @@ var config = {
             debug: false
         }
     },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    },
+    scene: GamePlay,
     canvas: gameCanvas,
 };
 
