@@ -186,6 +186,7 @@ function hitBomb (player, bomb)
     text.setX(scoreX - text.width / 2);
     startY += 20;
 
+    var scoreLines;
     $.ajax({
         async: false,
         type: 'POST',
@@ -193,18 +194,12 @@ function hitBomb (player, bomb)
         data: {
             score: score 
         },
+        success: function(data) {
+            scoreLines = $.parseJSON(data);
+       }
     });
     
-    var scoreLines;
 
-    $.ajax({
-        async: false,
-        type: 'GET',
-        url: '/high-score',
-        success: function(data) {
-             scoreLines = $.parseJSON(data);
-        }
-    });
     
     var rank = 1;
     for (var i = 0; i < scoreLines.length; i++) {
