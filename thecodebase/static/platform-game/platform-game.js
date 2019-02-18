@@ -178,6 +178,22 @@ class GamePlay extends Phaser.Scene {
         player.anims.play('turn');
 
         this.gameOver = true;
+        
+        $.ajax({
+            type: 'POST',
+            url: '/post-score',
+            // Add this scene as the scope of the succes callback 
+            // so objects can be added to the scene
+            context: this,
+            data: {
+                score: this.score 
+            },
+            success: this.createMenu
+        });
+    }
+
+    createMenu(data) 
+    {
         var rankX = 100;
         var nameX = 400;
         var scoreX = 700;
@@ -196,21 +212,8 @@ class GamePlay extends Phaser.Scene {
         text.setX(scoreX - text.width / 2);
         startY += 20;
 
-        var scoreLines;
-        $.ajax({
-            async: false,
-            type: 'POST',
-            url: '/post-score',
-            data: {
-                score: this.score 
-            },
-            success: function(data) {
-                scoreLines = $.parseJSON(data);
-        }
-        });
-        
+        var scoreLines = $.parseJSON(data)
 
-        
         var rank = 1;
         for (var i = 0; i < scoreLines.length; i++) {
             var line = scoreLines[i];
@@ -227,9 +230,7 @@ class GamePlay extends Phaser.Scene {
 
             rank++;
         }
-        
     }
-
 }
 
 
