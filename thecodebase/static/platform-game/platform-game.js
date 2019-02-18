@@ -1,4 +1,8 @@
 
+// class GamePlay extends Phaser.Scene {
+
+// }
+
 var player;
 var stars;
 var bombs;
@@ -170,7 +174,8 @@ function hitBomb (player, bomb)
 
     var startY = 70;
     var stepY = 40;
-    // this.add.bitmapText(startX, startY, 'arcade', 'RANK  NAME  SCORE').setTint(0xff00ff);
+    
+
     text = this.add.bitmapText(0, startY, 'arcade', 'RANK').setTint(0xff00ff);
     text.setX(rankX - text.width / 2);
 
@@ -181,8 +186,13 @@ function hitBomb (player, bomb)
     text.setX(scoreX - text.width / 2);
     startY += 20;
 
-    $.post( "/post-score", {
-        score: score 
+    $.ajax({
+        async: false,
+        type: 'POST',
+        url: '/post-score',
+        data: {
+            score: score 
+        },
     });
     
     var scoreLines;
