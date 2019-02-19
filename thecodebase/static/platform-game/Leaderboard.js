@@ -3,25 +3,37 @@ class Leaderboard extends Phaser.Scene {
 
     constructor () 
     {
-        super('Leaderboard')
-        
+        super('Leaderboard') 
     }
 
-    preload() {
-        this.load.image('sky', '/static/platform-game/assets/sky.png');
-        this.load.bitmapFont('arcade', '/static/platform-game/assets/fonts/bitmap/arcade.png', '/static/platform-game/assets/fonts/bitmap/arcade.xml');
-    }
-
-    create() {
+    create() 
+    {
         this.key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.add.image(400, 300, 'sky');
-
     }
 
-    update() {
+    update() 
+    {
         if (this.key.isDown) {
             this.scene.start('GamePlay');
         }
+    }
+
+    postScore(score) 
+    {
+        $.ajax({
+            type: 'POST',
+            url: '/post-score',
+            // Add this scene as the scope of the succes callback 
+            // so objects can be added to the scene
+            context: this,
+            data: {
+                score: score 
+            },
+            // Call createLeaderboard with the result
+            success: this.createLeaderboard
+        });
+
     }
 
     createLeaderboard(data) 
@@ -58,20 +70,4 @@ class Leaderboard extends Phaser.Scene {
     {
         this.menuTexts.push(this.add.bitmapText(x, y, 'arcade', text).setTint(0x1E5D2E).setOrigin(0.5, 0));
     }
-
-    postScore(score) {
-        $.ajax({
-            type: 'POST',
-            url: '/post-score',
-            // Add this scene as the scope of the succes callback 
-            // so objects can be added to the scene
-            context: this,
-            data: {
-                score: score 
-            },
-            success: this.createLeaderboard
-        });
-
-    }
 }
-

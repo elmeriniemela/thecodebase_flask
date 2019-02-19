@@ -9,7 +9,7 @@ var config = {
             debug: false
         }
     },
-    scene: [GamePlay, Leaderboard,],
+    scene: [Preloader, GamePlay, Leaderboard,],
     canvas: gameCanvas,
 };
 
