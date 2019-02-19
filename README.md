@@ -1,9 +1,5 @@
-/etc/apache2/sites-available/thecodebase.conf
+# The Codebase
 
-sudo tail -f /var/log/apache2/error.log
+[Website](http://www.thecodebase.site "www.thecodebase.site")
 
-Install instructions:
-
-sudo apt-get install apache2 mysql-client mysql-server
-
-sudo apt-get install python-pip python-dev libmysqlclient-dev
+![alt text](https://raw.githubusercontent.com/thecodebasesite/thecodebase/master/thecodebase/static/images/mainlogo.png)
