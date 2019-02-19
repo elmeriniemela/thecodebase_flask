@@ -211,12 +211,12 @@ def url_value_preprocessor(endpoint, values):
 
 @app.route('/post-score', methods=['POST'])
 def post_score():
+    score = request.form['score']
     select_sql = """
     SELECT username, score, time FROM Score
     JOIN users ON users.uid = Score.uid
     ORDER BY score DESC
     """
-    score = request.form['score']
     with Cursor() as cur:
         cur.execute("INSERT INTO Score (score, uid, time) VALUES (%s, %s, %s)", 
             (score, session.get('uid'), datetime.now(),)

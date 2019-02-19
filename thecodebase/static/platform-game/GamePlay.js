@@ -17,8 +17,8 @@ class GamePlay extends Phaser.Scene {
             '/static/platform-game/assets/dude.png',
             { frameWidth: 32, frameHeight: 48 }
         );
+        this.load.bitmapFont('arcade', '/static/platform-game/assets/fonts/bitmap/arcade.png', '/static/platform-game/assets/fonts/bitmap/arcade.xml');
 
-       
     }
 
 
@@ -183,30 +183,10 @@ class GamePlay extends Phaser.Scene {
         player.anims.play('turn');
 
         this.gameOver = true;
-        this.scene.pause();
-        let leaderboard = this.scene.get('Leaderboard')
-        leaderboard.scene.start();
-        leaderboard.postScore(this.score);
-        
-    }
+        this.scene.start('Leaderboard');
+        this.scene.get('Leaderboard').postScore(this.score)
 
-    restart_game() 
-    {
-        this.gameOver = false;
-        this.physics.resume();
-        this.score = 0;
-        this.scoreText.setText('Score: ' + this.score);
-        this.bombs.children.iterate(function (child) {
-            child.destroy();
-        });
         
-        this.bombs.clear(true);
-        this.player.x = 100;
-        this.player.y = 450;
-        this.player.setVelocityX(0);
-        this.player.setVelocityY(0);
-        this.player.clearTint();
-        this.refreshLevel();
     }
 }
 

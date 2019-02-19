@@ -8,19 +8,19 @@ class Leaderboard extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('sky', '/static/platform-game/assets/sky.png');
         this.load.bitmapFont('arcade', '/static/platform-game/assets/fonts/bitmap/arcade.png', '/static/platform-game/assets/fonts/bitmap/arcade.xml');
     }
 
     create() {
+        this.key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.add.image(400, 300, 'sky');
 
     }
 
     update() {
-        if (this.input.space.isDown) {
-            this.scene.stop();
-            let game = this.scene.get('GamePlay')
-            game.scene.resume();
-            game.restart_game();
+        if (this.key.isDown) {
+            this.scene.start('GamePlay');
         }
     }
 
@@ -56,7 +56,7 @@ class Leaderboard extends Phaser.Scene {
     }
     addText(x, y, text) 
     {
-        this.menuTexts.push(this.add.bitmapText(x, y, 'arcade', text).setTint(0xff00ff).setOrigin(0.5, 0));
+        this.menuTexts.push(this.add.bitmapText(x, y, 'arcade', text).setTint(0x1E5D2E).setOrigin(0.5, 0));
     }
 
     postScore(score) {
