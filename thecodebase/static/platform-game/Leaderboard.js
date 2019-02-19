@@ -19,8 +19,9 @@ class Leaderboard extends Phaser.Scene {
         }
     }
 
-    postScore(score) 
+    postScore(score)
     {
+        this.score = score;
         $.ajax({
             type: 'POST',
             url: '/post-score',
@@ -55,19 +56,30 @@ class Leaderboard extends Phaser.Scene {
         var scoreLines = $.parseJSON(data)
 
         var rank = 1;
+        var highlight = true;
         for (var i = 0; i < scoreLines.length; i++) {
             var line = scoreLines[i];
             var y = startY + (rank * stepY);
 
-            this.addText(rankX, y, rank);
-            this.addText(nameX, y, line[0]);
-            this.addText(scoreX, y, line[1]);
+            if (highlight && parseInt(line[1], 10) == this.score) {
+                this.addText(rankX, y, rank, 0xff00ff);
+                this.addText(nameX, y, line[0], 0xff00ff);
+                this.addText(scoreX, y, line[1], 0xff00ff);
+                highlight = false;
+                
+            } else {
+                this.addText(rankX, y, rank);
+                this.addText(nameX, y, line[0]);
+                this.addText(scoreX, y, line[1]);
+
+            }
+            
 
             rank++;
         }
     }
-    addText(x, y, text) 
+    addText(x, y, text, tint=0x1E5D2E) 
     {
-        this.menuTexts.push(this.add.bitmapText(x, y, 'arcade', text).setTint(0x1E5D2E).setOrigin(0.5, 0));
+        this.menuTexts.push(this.add.bitmapText(x, y, 'arcade', text).setTint(tint).setOrigin(0.5, 0));
     }
 }

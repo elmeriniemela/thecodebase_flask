@@ -30,7 +30,7 @@ class GamePlay extends Phaser.Scene {
         this.player = this.physics.add.sprite(100, 450, 'dude');
 
         //  Player physics properties. Give the little guy a slight bounce.
-        this.player.setBounce(0.2);
+        // this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
 
         //  Our this.player animations, turning, walking left and walking right.
