@@ -3,3 +3,4 @@ thecodebase/venv/**/*
 .vscode/*
 !thecodebase/static
 thecodebase/credentials.json
+*.egg-info
