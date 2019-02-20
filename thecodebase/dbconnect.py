@@ -5,10 +5,11 @@ import os
 import gc
 from contextlib import contextmanager
 import MySQLdb
+import pkg_resources
 
+filename = pkg_resources.resource_filename('thecodebase', 'credentials.json')
 
-current_dir = os.path.dirname(os.path.realpath(__file__))
-with open(os.path.join(current_dir, 'credentials.json')) as f:
+with open(filename) as f:
     credentials = json.load(f)["mysql"]
 
 USER = credentials[0]

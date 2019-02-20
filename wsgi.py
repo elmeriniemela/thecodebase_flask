@@ -3,13 +3,14 @@ import sys
 import os
 import logging
 import json
+import pkg_resources
 
 from thecodebase import app as application
 
 logging.basicConfig(stream=sys.stderr)
 
-DIR = os.path.dirname(os.path.realpath(__file__))
-with open(os.path.join(DIR, 'thecodebase', 'credentials.json')) as f:
+CONF = pkg_resources.resource_filename('thecodebase', 'credentials.json')
+with open(CONF) as f:
     KEY = json.load(f)["secret_key"]
 
 application.secret_key = KEY

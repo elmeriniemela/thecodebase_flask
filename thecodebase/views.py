@@ -34,11 +34,9 @@ def about_me():
 @app.route('/download-cv/')
 @login_required
 def download_cv():
-    current_dir = os.path.dirname(os.path.realpath(__file__))
-    return send_file(
-        os.path.join(current_dir, 'docs', 'cv_elmeri.pdf'),
-        attachment_filename='cv_elmeri.pdf'
-    )
+    import pkg_resources
+    filename = pkg_resources.resource_filename('thecodebase', 'docs/cv_elmeri.pdf')
+    return send_file(filename, attachment_filename='cv_elmeri.pdf')
 
 @app.route('/eat-game/')
 @login_required
