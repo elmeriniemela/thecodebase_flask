@@ -17,5 +17,4 @@ input[type=search] {
 	background: #555 url(/static/images/mob-search-icon.png) no-repeat 9px center;
 	border: solid 1px #ccc;
 	padding: 9px 10px 9px 32px;
-	width: 55px;
 }
