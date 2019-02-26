@@ -6,6 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+	<link href="{{ url_for('static', filename='modifications/main.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='modifications/search.css') }}" rel="stylesheet">
 	{% block head %}{% endblock %}
 
 
@@ -28,13 +31,15 @@
 
 	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 
+	{% block widebody %}{% endblock %}
+	
 		<div class="container mt-4" style="margin-bottom: 200px;">
 				{% with messages = get_flashed_messages() %}
 				{% if messages %}
 				  {% for message in messages %}
 					<div class="alert alert-warning alert-dismissible text-center" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-					  {{message}}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+							{{message}}
 					</div>
 				  {% endfor %}
 				{% endif %}
