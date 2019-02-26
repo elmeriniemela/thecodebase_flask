@@ -31,20 +31,27 @@
 
 	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 
-	{% block widebody %}{% endblock %}
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	{% for message in messages %}
+	<div id="fading-alert" class="alert alert-warning alert-dismissible text-center" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+		{{message}}
+	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+<script>
 	
+$("#fading-alert").fadeTo(3000, 500).slideUp(500, function(){
+    $("#fading-alert").slideUp(500);
+});
+</script>
+	
+	{% block widebody %}{% endblock %}
 		<div class="container mt-4" style="margin-bottom: 200px;">
-				{% with messages = get_flashed_messages() %}
-				{% if messages %}
-				  {% for message in messages %}
-					<div class="alert alert-warning alert-dismissible text-center" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-							{{message}}
-					</div>
-				  {% endfor %}
-				{% endif %}
-			  {% endwith %}
-			{% block body %}{% endblock %}
+						{% block body %}{% endblock %}
+				
 		</div>
 
 	

@@ -1,4 +1,4 @@
-body {background-color: #edefef; padding-top: 65px; }
+body {background-color: #edefef; padding-top: 72.5px; }
 a { text-decoration: none; color: #24404d; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; transition: all 0.3s; }
 a:focus, a:hover { text-decoration: none; color: #f85759; }
 
@@ -18,3 +18,5 @@ input[type=search] {
 	border: solid 1px #ccc;
 	padding: 9px 10px 9px 32px;
 }
+
+.alert {margin-bottom: 0px}
