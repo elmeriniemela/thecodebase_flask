@@ -41,18 +41,36 @@
 	{% endfor %}
 	{% endif %}
 	{% endwith %}
-<script>
-	
-$("#fading-alert").fadeTo(3000, 500).slideUp(500, function(){
-    $("#fading-alert").slideUp(500);
-});
-</script>
-	
-	{% block widebody %}{% endblock %}
-		<div class="container mt-4" style="margin-bottom: 200px;">
-						{% block body %}{% endblock %}
-				
+	<script>
+		$("#fading-alert").fadeTo(3000, 500).slideUp(500, function(){
+			$("#fading-alert").slideUp(500);
+		});
+	</script>
+
+	 <!-- page-header -->
+	 <div class="page-header" style="background: url(/static/images/office_header.jpg)no-repeat">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+					<div class="page-caption text-center">
+						<h1 class="page-title">The Codebase</h1>
+					</div>
+				</div>
+			</div>
 		</div>
+	</div>
+	
+
+	<div class="container mt-4" style="margin-bottom: 200px;">
+		<div class="card-section">
+			{% block body %}{% endblock %}
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+					Created by <a href="https://www.thecodebase.site/" >The Codebase</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	
 </body>

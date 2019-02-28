@@ -9,35 +9,37 @@
 {% endblock %}
 
 {% block body %}
-<div id="canvas-container">
-    <canvas id="gameCanvas">Canvas not supported in your browser</canvas>
-    <script>
+<div class="card-block bg-white">
 
-        /*--- CONFIG + RUNNING THE GAME ---*/
+    <div id="canvas-container">
+        <canvas id="gameCanvas">Canvas not supported in your browser</canvas>
+        <script>
 
-        //Define the game config once everything else is defined
-        var config = {
-        type: Phaser.AUTO,
-        width: 640,
-        height: 480,
-        pixelArt: true,
-        physics: {
-            default: "arcade",
-            arcade: {
-            gravity: { y: 0 },
-            debug: false
-            }
-        },
-        scene: gamePlay,
-        canvas: gameCanvas,
-        };
+            /*--- CONFIG + RUNNING THE GAME ---*/
 
-        //Instantiate the game with the config
-        var game = new Phaser.Game(config);
+            //Define the game config once everything else is defined
+            var config = {
+            type: Phaser.AUTO,
+            width: 640,
+            height: 480,
+            pixelArt: true,
+            physics: {
+                default: "arcade",
+                arcade: {
+                gravity: { y: 0 },
+                debug: false
+                }
+            },
+            scene: gamePlay,
+            canvas: gameCanvas,
+            };
 
-    </script>
+            //Instantiate the game with the config
+            var game = new Phaser.Game(config);
 
-</div>
-    
+        </script>
+
+    </div>
+</div>      
 
 {% endblock %}
