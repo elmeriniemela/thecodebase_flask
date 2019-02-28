@@ -1,7 +1,5 @@
 
 import gc
-import traceback
-import sys
 from datetime import datetime
 
 from passlib.hash import sha256_crypt
@@ -32,16 +30,6 @@ import thecodebase.views
 def page_not_found(e):
     return render_template("404.html")
 
-@app.errorhandler(500)
-def python_error(e):
-    _, _, tb = sys.exc_info()
-    return render_template("500.html", error=repr(e), traceback=traceback.format_tb(tb))
-
-def format_exception(tb):
-    error_html = Markup(tb.render_as_text())
-    return render_template("jinja_error.html", error=error_html)
-
-app.jinja_env.exception_formatter = format_exception
 
 @app.context_processor
 def topic_dict_context():
