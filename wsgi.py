@@ -1,6 +1,6 @@
 #!/usr/bin/python
+
 import sys
-import os
 import logging
 import json
 import pkg_resources
