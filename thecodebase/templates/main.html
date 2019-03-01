@@ -11,8 +11,6 @@
 	<link href="{{ url_for('static', filename='modifications/search.css') }}" rel="stylesheet">
 	{% block head %}{% endblock %}
 
-
-
 </head>
 
 <header>
@@ -48,12 +46,12 @@
 	</script>
 
 	 <!-- page-header -->
-	 <div class="page-header" style="background: url(/static/images/office_header.jpg)no-repeat">
+	 <div class="page-header" style=" background: url({{ url_for('static', filename='images/%s' % bg) }})no-repeat; position: relative; background-size: cover; background-position: 50%;">
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 					<div class="page-caption text-center">
-						<h1 class="page-title">The Codebase</h1>
+						<h1 class="page-title">{{ page_title }}</h1>
 					</div>
 				</div>
 			</div>
@@ -64,7 +62,7 @@
 	<div class="container mt-4" style="margin-bottom: 200px;">
 		<div class="card-section">
 			{% block body %}{% endblock %}
-			<div class="row">
+			<div class="row m-4">
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
 					Created by <a href="https://www.thecodebase.site/" >The Codebase</a>
 				</div>

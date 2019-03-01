@@ -3,12 +3,12 @@ a { text-decoration: none; color: #24404d; -webkit-transition: all 0.3s; -moz-tr
 a:focus, a:hover { text-decoration: none; color: #f85759; }
 
 
-.page-header { position: relative; background-size: cover; background-position: 50%;}
 .page-caption { padding-top: 170px; padding-bottom: 174px; }
-.page-title { margin: 0px 0px 10px 0px; letter-spacing: -1px; line-height: 1;font-size: 46px; line-height: 1; color: #fff; font-weight: 400; text-align: center; }
+.page-title { margin: 0px 0px 10px 0px; letter-spacing: -1px; line-height: 1;font-size: 46px; line-height: 1; color: #fff; font-weight: 400; text-align: center; 	
+	text-shadow: 2px 4px 3px rgba(0,0,0,0.3);}
 
 .card-section { position: relative; bottom: 60px; }
-.card-block { padding: 80px; padding-top: 60px; }
+.card-block { padding: 80px; padding-top: 60px; border-radius: 25px;}
 .section-title { margin-bottom: 60px; }
 
 .instagram-media { min-width: 270px !important;}

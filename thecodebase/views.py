@@ -15,7 +15,13 @@ def homepage():
     return render_template("home.html", home=True)
 
 def create_topic(topic):
-    app.route('/{}/'.format(topic[1]), endpoint=topic[1])(login_required(lambda: render_template('projects.html', key=topic, projects=True)))
+    kwargs = dict(
+        key=topic, 
+        projects=True, 
+        bg='programming_header.jpg',
+        page_title='Projects'
+    )
+    app.route('/{}/'.format(topic[1]), endpoint=topic[1])(login_required(lambda: render_template('projects.html', **kwargs)))
 
 for key in TOPIC_DICT:
     create_topic(key)
@@ -24,12 +30,22 @@ for key in TOPIC_DICT:
 @app.route('/my-server/')
 @login_required
 def my_server():
-    return render_template("my_server.html", my_server=True)
+    kwargs = dict(
+        my_server=True, 
+        bg='programming_header.jpg', 
+        page_title='My Server'
+    )
+    return render_template("my_server.html", **kwargs)
 
 @app.route('/about-me/')
 @login_required
 def about_me():
-    return render_template("about_me.html", about_me=True)
+    kwargs = dict(
+         about_me=True, 
+         bg='glider_header.jpg',
+         page_title='About Me'
+    )
+    return render_template("about_me.html", **kwargs)
 
 @app.route('/download-cv/')
 @login_required
@@ -41,9 +57,19 @@ def download_cv():
 @app.route('/eat-game/')
 @login_required
 def eat_game():
-    return render_template("eat-game.html", game=True)
+    kwargs = dict(
+         game=True,
+         bg='gaming_header.jpg',
+         page_title='Eat Game'
+    )
+    return render_template("eat-game.html", **kwargs)
 
 @app.route('/platform-game/')
 @login_required
 def platform_game():
-    return render_template("platform-game.html", game=True)
+    kwargs = dict(
+         game=True,
+         bg='gaming_header.jpg',
+         page_title='Platform Game'
+    )
+    return render_template("platform-game.html", **kwargs)
