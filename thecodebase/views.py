@@ -7,7 +7,7 @@ from flask import send_file
 
 from thecodebase import app
 from thecodebase import TOPIC_DICT
-from thecodebase.wrappers import login_required
+from thecodebase.wrappers import login_required, mobile_not_supported
 
 
 @app.route('/')
@@ -56,6 +56,7 @@ def download_cv():
 
 @app.route('/eat-game/')
 @login_required
+@mobile_not_supported
 def eat_game():
     kwargs = dict(
          game=True,
@@ -66,6 +67,7 @@ def eat_game():
 
 @app.route('/platform-game/')
 @login_required
+@mobile_not_supported
 def platform_game():
     kwargs = dict(
          game=True,

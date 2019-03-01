@@ -8,7 +8,13 @@ a:focus, a:hover { text-decoration: none; color: #f85759; }
 	text-shadow: 2px 4px 3px rgba(0,0,0,0.3);}
 
 .card-section { position: relative; bottom: 60px; }
-.card-block { padding: 80px; padding-top: 60px; border-radius: 25px;}
+@media only screen and (max-width: 767px) {
+	.card-block { padding: 5px; padding-top: 60px; padding-bottom: 60px; border-radius: 25px; }
+}
+@media only screen and (min-width: 767px) {
+	.card-block { padding: 80px; padding-top: 60px; padding-bottom: 60px; border-radius: 25px; }
+}
+
 .section-title { margin-bottom: 60px; }
 
 .instagram-media { min-width: 270px !important;}
