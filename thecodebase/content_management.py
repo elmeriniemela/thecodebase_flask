@@ -1,9 +1,12 @@
 from collections import namedtuple
 
-Project = namedtuple('Project', ['title', 'url', 'html_file', 'image'])
-Topic = namedtuple('Topic', ['title', 'url', 'image', 'description'])
+
 
 def Content():
+    Project = namedtuple('Project', ['title', 'url', 'html_file', 'image'])
+    Topic = namedtuple('Topic', ['title', 'url', 'image', 'description'])
+
+
     python = Topic(
         title='Python',
         url='python',
@@ -70,3 +73,14 @@ def Content():
         ],
     }
     
+
+def Games():
+    Game = namedtuple('Game', ['title', 'url_dir', 'image', 'description'])
+
+    platform = Game('Platform Game', 'platform-game', 'platform_game.png', 'Collect as many starts as you can, but beware of the bombs! See if you can get the highest score.')
+    eat = Game('Eat Game', 'eat-game', 'eat_game.png', "Eat the baddies when they are vulnerable, but watch out when they're not!")
+
+    return {
+        platform : ['config.js', 'Preloader.js', 'Leaderboard.js', 'GamePlay.js'],
+        eat : ['config.js', 'eat-game.js']
+    }

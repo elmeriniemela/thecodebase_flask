@@ -9,10 +9,25 @@ from thecodebase import app
 from thecodebase import TOPIC_DICT
 from thecodebase.wrappers import login_required, mobile_not_supported
 
+from .content_management import Games
+
+GAMES_DICT = Games()
+
 
 @app.route('/')
 def homepage():
     return render_template("home.html", home=True)
+
+
+@app.route('/games/')
+def games():
+    kwargs = dict(
+        game=True,
+        bg='gaming_header.jpg',
+        GAMES_DICT=GAMES_DICT,
+        page_title='Games'
+    )
+    return render_template("games.html", **kwargs)
 
 def create_topic(topic):
     kwargs = dict(
@@ -54,24 +69,16 @@ def download_cv():
     filename = pkg_resources.resource_filename('thecodebase', 'docs/cv_elmeri.pdf')
     return send_file(filename, attachment_filename='cv_elmeri.pdf')
 
-@app.route('/eat-game/')
-@login_required
-@mobile_not_supported
-def eat_game():
-    kwargs = dict(
-         game=True,
-         bg='gaming_header.jpg',
-         page_title='Eat Game'
-    )
-    return render_template("eat-game.html", **kwargs)
 
-@app.route('/platform-game/')
-@login_required
-@mobile_not_supported
-def platform_game():
+def create_game(game, resources):
     kwargs = dict(
          game=True,
          bg='gaming_header.jpg',
-         page_title='Platform Game'
+         page_title=game[0],
+         folder=game[1],
+         resources=resources
     )
-    return render_template("platform-game.html", **kwargs)
+    app.route('/games/{}/'.format(game[1]), endpoint=game[1])(mobile_not_supported(login_required(lambda: render_template('phaser-game.html', **kwargs))))
+
+for game, resources in GAMES_DICT.items():
+    create_game(game, resources)

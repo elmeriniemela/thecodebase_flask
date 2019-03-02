@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+
+{% block head %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/phaser.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='modifications/phaser.css') }}" rel="stylesheet"/>    
+    {% for file in resources[1:] %}
+        <script type="text/javascript" src="{{ url_for('static', filename='%s/%s' % (folder, file) ) }}"></script>
+    {% endfor %}
+
+{% endblock %}
+
+{% block body %}
+<div class="card-block bg-white">
+
+    <div id="canvas-container">
+        <canvas id="gameCanvas">Canvas not supported in your browser</canvas>
+
+        <script type="text/javascript" src="{{ url_for('static', filename='%s/%s' % (folder, resources[0]) ) }}"></script>
+            
+    </div>
+</div>
+    
+
+{% endblock %}
