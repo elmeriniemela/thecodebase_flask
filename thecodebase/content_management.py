@@ -1,20 +1,18 @@
 from collections import namedtuple
 
+Card = namedtuple('Card', ['title', 'url', 'image', 'description'])
 
-
-def Content():
+def Projects():
     Project = namedtuple('Project', ['title', 'url', 'html_file', 'image'])
-    Topic = namedtuple('Topic', ['title', 'url', 'image', 'description'])
-
-
-    python = Topic(
+    
+    python = Card(
         title='Python',
         url='python',
         image='python_logo.png',
         description="Python is my strongest language. It's the main language I've used professionally."
     )
 
-    java = Topic(
+    java = Card(
         title='Java',
         url='java',
         image='java_logo.png',
@@ -22,19 +20,19 @@ def Content():
     )
 
 
-    web_development = Topic(
+    web_development = Card(
         title='Web Development',
         url='web-development',
         image='web-development.jpg',
         description="This website is an example of my skills with Flask and Bootstrap. I've also learned alot about deploying servers from my work at SprintIT.",
     )
-    c_c_plus = Topic(
+    c_c_plus = Card(
         title='C/C++',
         url='C-C++',
         image='c++.png',
         description="I've studied the basics of C/C++. There's alot I'd like to do with C++ for example rewrite some of the games I've made with pygame.",
     )
-    javascript = Topic(
+    javascript = Card(
         title='JavaScript',
         url='javascript',
         image='javascript.png',
@@ -75,10 +73,19 @@ def Content():
     
 
 def Games():
-    Game = namedtuple('Game', ['title', 'url_dir', 'image', 'description'])
 
-    platform = Game('Platform Game', 'platform-game', 'platform_game.png', 'Collect as many starts as you can, but beware of the bombs! See if you can get the highest score.')
-    eat = Game('Eat Game', 'eat-game', 'eat_game.png', "Eat the baddies when they are vulnerable, but watch out when they're not!")
+    platform = Card(
+        title='Platform Game',
+        url='platform-game',
+        image='platform_game.png',
+        description='Collect as many starts as you can, but beware of the bombs! See if you can get the highest score.'
+    )
+    eat = Card(
+        title='Eat Game',
+        url='eat-game',
+        image='eat_game.png',
+        description="Eat the baddies when they are vulnerable, but watch out when they're not!"
+    )
 
     return {
         platform : ['config.js', 'Preloader.js', 'Leaderboard.js', 'GamePlay.js'],

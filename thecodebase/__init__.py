@@ -11,12 +11,12 @@ from flask import session
 from flask import request
 
 
-from .content_management import Content
+from .content_management import Projects
 from .dbconnect import Cursor
 from .users import users
 from .ajax import ajax
 
-TOPIC_DICT = Content()
+TOPIC_DICT = Projects()
 
 app = Flask(__name__)
 app.register_blueprint(users)
