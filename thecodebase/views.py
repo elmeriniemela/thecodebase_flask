@@ -51,10 +51,11 @@ def create_game(game, resources):
     )
     app.route('/games/{}/'.format(game[1]), endpoint=game[1])(
         mobile_not_supported(
-                login_required(lambda: render_template('phaser-game.html', **kwargs)
+                login_required(
+                    lambda: render_template('phaser-game.html', **kwargs)
+                )
             )
         )
-    )
 
 for game, resources in GAMES_DICT.items():
     create_game(game, resources)
