@@ -11,7 +11,7 @@ from flask import session
 from flask import request
 
 
-from .content_management import Projects
+from .content import Projects
 from .dbconnect import Cursor
 from .users import users
 from .ajax import ajax
