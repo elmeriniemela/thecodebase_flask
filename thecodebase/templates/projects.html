@@ -4,35 +4,32 @@
 {% block body %}
 <div class="card-block bg-white">
 
-    <h1 class="display-4 mb-4 text-center">{{ key[0] }}</h1>
-    {% if TOPIC_DICT[key] %}
-    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+    <h1 class="display-4 mb-4 text-center">{{ topic.title }}</h1>
+    {% if TOPIC_DICT[topic] %}
+    {% set projects = TOPIC_DICT[topic] %}
+    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">        
+        {% for project in projects %}
         <li class="nav-item">
-            <a class="nav-link active text-dark" id="{{ TOPIC_DICT[key][0][1] }}-tab" data-toggle="tab" href="#{{ TOPIC_DICT[key][0][1] }}" role="tab" aria-controls="{{ TOPIC_DICT[key][0][1] }}" aria-selected="false">{{ TOPIC_DICT[key][0][0] }}</a>
-        </li>
-        
-        {% for t in TOPIC_DICT[key][1:] %}
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="{{ t[1] }}-tab" data-toggle="tab" href="#{{ t[1] }}" role="tab" aria-controls="{{ t[1] }}" aria-selected="false">{{ t[0] }}</a>
+            <a class="nav-link {{ 'active' if project == projects[0] }} text-dark" id="{{ project.url }}-tab" data-toggle="tab" href="#{{ project.url }}" role="tab" aria-controls="{{ project.url }}" aria-selected="false">{{ project.title }}</a>
         </li>
         {% endfor %}
     </ul>
     <div class="tab-content" id="myTabContent">
-        {% for t in TOPIC_DICT[key] %}
-        <div class="tab-pane fade mt-4 {{ 'show active' if t == TOPIC_DICT[key][0] }}" id="{{ t[1] }}" role="tabpanel" aria-labelledby="{{ t[1] }}-tab">
+        {% for project in projects %}
+        <div class="tab-pane fade mt-4 {{ 'show active' if project == projects[0] }}" id="{{ project.url }}" role="tabpanel" aria-labelledby="{{ project.url }}-tab">
             <div class="container pt-4 text-center">
-                <h3>{{ t[0] }}</h3>
+                <h3>{{ project.title }}</h3>
                 <p>
-                    <a href="https://github.com/thecodebasesite/{{ t[1] }}" class="badge badge-light ">Github Repository</a>
+                    <a href="https://github.com/thecodebasesite/{{ project.url }}" class="badge badge-light ">Github Repository</a>
                 </p>
                 <div class="row">
-                    <div class="col-lg-{{ '6' if t[2] else '12' }} col-md-12 mt-4">
-                        <img src="{{ url_for('static', filename='images/%s' % t[3]) }}" class="img-fluid float-center" alt="Responsive image"/>
+                    <div class="col-lg-{{ '6' if project.html_file else '12' }} col-md-12 mt-4">
+                        <img src="{{ url_for('static', filename='images/%s' % project.image) }}" class="img-fluid float-center" alt="Responsive image"/>
                     </div>
-                    {% if t[2] %}
+                    {% if project.html_file %}
                     <div class="col-lg-6 col-md-12 mb-4">
                         <p class="m-4">
-                            {% include 'projects/%s' % t[2] %}
+                            {% include 'projects/%s' % project.html_file %}
                         </p>
                     </div>
                     {% endif %}

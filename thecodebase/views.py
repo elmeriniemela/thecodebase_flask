@@ -20,12 +20,12 @@ def homepage():
 
 def create_topic(topic):
     kwargs = dict(
-        key=topic, 
-        projects=True, 
+        topic=topic,
+        projects=True,
         bg='programming_header.jpg',
         page_title='Projects'
     )
-    app.route('/{}/'.format(topic[1]), endpoint=topic[1])(login_required(lambda: render_template('projects.html', **kwargs)))
+    app.route('/{}/'.format(topic.url), endpoint=topic.url)(login_required(lambda: render_template('projects.html', **kwargs)))
 
 for key in TOPIC_DICT:
     create_topic(key)
@@ -45,11 +45,11 @@ def create_game(game, resources):
     kwargs = dict(
          game=True,
          bg='gaming_header.jpg',
-         page_title=game[0],
-         folder=game[1],
+         page_title=game.title,
+         folder=game.url,
          resources=resources
     )
-    app.route('/games/{}/'.format(game[1]), endpoint=game[1])(
+    app.route('/games/{}/'.format(game.url), endpoint=game.url)(
         mobile_not_supported(
                 login_required(
                     lambda: render_template('phaser-game.html', **kwargs)

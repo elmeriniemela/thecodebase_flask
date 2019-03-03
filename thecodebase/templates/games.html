@@ -15,12 +15,12 @@
 <div class="row">
     {% for game in GAMES_DICT.keys() %}
     <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card" style="min-height:26rem" onclick="location.href = '{{ game[1] }}';">
-            <img class="img-fluid align-self-center m-4" src="{{ url_for('static', filename='images/%s' % game[2]) }}" alt="Card image cap" style="max-width: 14rem; max-height: 8rem; overflow:hidden">
+        <div class="card" style="min-height:26rem" onclick="location.href = '{{ game.url }}';">
+            <img class="img-fluid align-self-center m-4" src="{{ url_for('static', filename='images/%s' % game.image) }}" alt="Card image cap" style="max-width: 14rem; max-height: 8rem; overflow:hidden">
             <div class="card-body">
-                <h5 class="card-title">{{ game[0] }}</h5>
-                <p class="card-text">{{ game[3] }}</p>
-                <a href="/{{ game[1] }}/" class="btn btn-secondary">View</a>
+                <h5 class="card-title">{{ game.title }}</h5>
+                <p class="card-text">{{ game.description }}</p>
+                <a href="/{{ game.url }}/" class="btn btn-secondary">View</a>
             </div>
         </div>
             

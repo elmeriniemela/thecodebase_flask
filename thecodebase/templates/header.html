@@ -20,8 +20,8 @@
                         Projects
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% for key in TOPIC_DICT.keys() %}
-                        <a class="dropdown-item" href="/{{ key[1] }}/">{{ key[0] }}</a>
+                        {% for topic in TOPIC_DICT.keys() %}
+                        <a class="dropdown-item" href="/{{ topic.url }}/">{{ topic.title }}</a>
                         {% endfor %}
                     </div>
                 </li>
