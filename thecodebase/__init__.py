@@ -33,7 +33,7 @@ def page_not_found(e):
 
 @app.context_processor
 def topic_dict_context():
-    return dict(TOPIC_DICT=TOPIC_DICT, bg='office_header.jpg', page_title='The Codebase')
+    return dict(TOPIC_DICT=TOPIC_DICT, bg='cave_header.jpg', page_title='The Codebase')
 
 
 @app.url_value_preprocessor
