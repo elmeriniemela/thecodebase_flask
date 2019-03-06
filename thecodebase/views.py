@@ -4,12 +4,15 @@ import os
 
 from flask import render_template
 from flask import send_file
+from flask import request
+from flask import flash
 
 from thecodebase import app
 from thecodebase import TOPIC_DICT
 from thecodebase.wrappers import login_required, mobile_not_supported
 
 from .content import Games
+from .refactor_ics import refactor_file
 
 GAMES_DICT = Games()
 
@@ -70,6 +73,39 @@ def my_server():
         page_title='My Server'
     )
     return render_template("my_server.html", **kwargs)
+
+
+@app.route('/refactor-ics/', methods=['GET', 'POST'])
+@login_required
+def refactor_ics():
+    kwargs = dict(
+        refactor=True, 
+        bg='programming_header.jpg', 
+        page_title='Refactor ICS'
+    )
+
+    def allowed_file(filename):
+        allowed = '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in set(['ics'])
+        if not allowed:
+            flash("Filetype not allowed")
+        return allowed
+
+    if request.method == 'POST':
+        if 'ics-file' not in request.files:
+            flash('Select file first')
+            return render_template("refactor-ics.html", **kwargs)
+        
+        ics_file = request.files['ics-file']
+        if ics_file.filename == '':
+            flash('Select proper filename')
+            return render_template("refactor-ics.html", **kwargs)
+
+        if ics_file and allowed_file(ics_file.filename):
+            file_io = refactor_file(ics_file)
+            return send_file(file_io, attachment_filename="refactored.ics", as_attachment=True)
+
+    return render_template("refactor-ics.html", **kwargs)
 
 @app.route('/about-me/')
 @login_required

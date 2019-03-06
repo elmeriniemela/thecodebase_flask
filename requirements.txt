@@ -2,3 +2,4 @@ Flask
 mod-wsgi
 mysqlclient
 passlib
+icalendar
