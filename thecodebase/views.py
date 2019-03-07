@@ -101,31 +101,28 @@ def refactor_template():
 @app.route('/refactor-ics/', methods=['GET', 'POST'])
 @login_required
 def refactor_ics():
-    def allowed_file(filename):
-        allowed = '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in set(['ics'])
-        if not allowed:
-            flash("Filetype not allowed")
-        return allowed
-
     if request.method == 'POST':
         if 'ics-file' not in request.files:
             flash('Select file first')
             return refactor_template()
         
         ics_file = request.files['ics-file']
-        if ics_file.filename == '':
-            flash('Select proper filename')
+        if ics_file.filename == '' or not ics_file.filename.endswith('.ics'):
+            flash('Select proper filename (.ics)')
             return refactor_template()
 
-        if ics_file and allowed_file(ics_file.filename):
-            file_io, results = refactor_file(ics_file)
-            with Cursor() as cur:
-                cur.execute("INSERT INTO Refactor (json, uid, time) VALUES (%s, %s, %s)", 
-                    (json.dumps(results, ensure_ascii=False).encode('utf-8'), session.get('uid'), datetime.now(),)
-                )
-
-            return send_file(file_io, attachment_filename="refactored.ics", as_attachment=True)
+        if ics_file:
+            try:
+                file_io, results = refactor_file(ics_file)
+                with Cursor() as cur:
+                    cur.execute("INSERT INTO Refactor (json, uid, time) VALUES (%s, %s, %s)",
+                        (json.dumps(results, ensure_ascii=False).encode('utf-8'), session.get('uid'), datetime.now(),)
+                    )
+                return send_file(file_io, attachment_filename="refactored.ics", as_attachment=True)
+            except ValueError as error:
+                app.logger.error("Error processing ics-file: {}\n\nFile content:\n{}".format(error, ics_file.read()))
+                flash("Error: Corrupted file")
+            
     return refactor_template()
 
     

@@ -19,7 +19,9 @@ def auto_refactor(ical_object):
     return results
 
 def refactor_file(ics_file):
-    ical_obj = Calendar.from_ical(ics_file.read())
+    data = ics_file.read()
+    ics_file.seek(0)
+    ical_obj = Calendar.from_ical(data)
     results = auto_refactor(ical_obj)
     file_io = io.BytesIO(ical_obj.to_ical())
     file_io.seek(0)
