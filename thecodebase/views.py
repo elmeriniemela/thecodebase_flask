@@ -1,7 +1,10 @@
 
 
-import os
 
+import json
+from datetime import datetime
+
+from flask import session
 from flask import render_template
 from flask import send_file
 from flask import request
@@ -12,6 +15,7 @@ from thecodebase import TOPIC_DICT
 from thecodebase.wrappers import login_required, mobile_not_supported
 
 from .content import Games
+from .dbconnect import Cursor
 from .refactor_ics import refactor_file
 
 GAMES_DICT = Games()
@@ -75,15 +79,28 @@ def my_server():
     return render_template("my_server.html", **kwargs)
 
 
-@app.route('/refactor-ics/', methods=['GET', 'POST'])
-@login_required
-def refactor_ics():
+def refactor_template():
+    
+    with Cursor() as cur:
+        found = cur.execute("SELECT json FROM Refactor ORDER BY time DESC")
+        if found:
+            data = json.loads(cur.fetchone()[0].decode('utf-8', 'ignore'))
+            lines = [(key, value) for key, value in data.items()]
+        else:
+            lines = []
+
     kwargs = dict(
         refactor=True, 
         bg='programming_header.jpg', 
-        page_title='Refactor ICS'
+        page_title='Refactor ICS',
+        enumerate=enumerate,
+        lines=lines,
     )
+    return render_template("refactor-ics.html", **kwargs)
 
+@app.route('/refactor-ics/', methods=['GET', 'POST'])
+@login_required
+def refactor_ics():
     def allowed_file(filename):
         allowed = '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in set(['ics'])
@@ -94,18 +111,24 @@ def refactor_ics():
     if request.method == 'POST':
         if 'ics-file' not in request.files:
             flash('Select file first')
-            return render_template("refactor-ics.html", **kwargs)
+            return refactor_template()
         
         ics_file = request.files['ics-file']
         if ics_file.filename == '':
             flash('Select proper filename')
-            return render_template("refactor-ics.html", **kwargs)
+            return refactor_template()
 
         if ics_file and allowed_file(ics_file.filename):
-            file_io = refactor_file(ics_file)
-            return send_file(file_io, attachment_filename="refactored.ics", as_attachment=True)
+            file_io, results = refactor_file(ics_file)
+            with Cursor() as cur:
+                cur.execute("INSERT INTO Refactor (json, uid, time) VALUES (%s, %s, %s)", 
+                    (json.dumps(results, ensure_ascii=False).encode('utf-8'), session.get('uid'), datetime.now(),)
+                )
 
-    return render_template("refactor-ics.html", **kwargs)
+            return send_file(file_io, attachment_filename="refactored.ics", as_attachment=True)
+    return refactor_template()
+
+    
 
 @app.route('/about-me/')
 @login_required

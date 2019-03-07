@@ -36,3 +36,9 @@ CREATE TABLE Score (
     score INT,
     FOREIGN KEY (uid) REFERENCES users(uid)
 );
+
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'thecodebase'
+AND table_name = 'users';
+

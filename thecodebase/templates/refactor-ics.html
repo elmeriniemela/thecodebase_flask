@@ -18,6 +18,28 @@
         
         <button class="btn btn-outline-secondary m-4" type="submit">Upload .ics</button>
       </form>
+
+    
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Original</th>
+            <th scope="col">Refactored</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for index, line in enumerate(lines, start=1) %}
+          <tr>
+            <th scope="row">{{ index }}</th>
+            <td>{{ line[0] }}</td>
+            <td>{{ line[1] }}</td>
+          </tr>
+          
+        {% endfor %}
+        </tbody>
+      </table>
+      
 </div>
 
 
