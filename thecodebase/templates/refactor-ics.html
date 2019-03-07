@@ -7,16 +7,29 @@
 
 {% block body %}
 
+
+<script type="text/javascript">
+  function submitAndRedirect() {
+      document.sendFile.submit();
+      setTimeout(function() {
+          location.href = "{{ url_for('refactor_ics') }}";
+      }, 500);
+  }
+</script>
+
+
 <div class="card-block bg-white text-center">
     <h1>Refactoring tool for shitty Aalto .ics</h1>
     <br>
-    <form class="form" method="post" enctype="multipart/form-data">
+    <form name="sendFile"  class="form" method="post" enctype="multipart/form-data">
         <div class="custom-file">
             <input name="ics-file" type=file class="custom-file-input" id="customFile"  onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
             <label class="custom-file-label" for="customFile">Choose .ics file</label>
         </div>
+
+
         
-        <button class="btn btn-outline-secondary m-4" type="submit">Upload .ics</button>
+        <button onclick="submitAndRedirect()" class="btn btn-outline-secondary m-4">Refactor file</button>
       </form>
 
     
@@ -40,6 +53,7 @@
         </tbody>
       </table>
       
+
 </div>
 
 
