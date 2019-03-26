@@ -18,13 +18,13 @@ def post_score():
     select_sql = """
     SELECT username, score, time FROM Score
     JOIN users ON users.uid = Score.uid
-    ORDER BY score DESC, Score.uid = %s DESC
+    ORDER BY score DESC, time DESC
     """
     with Cursor() as cur:
         cur.execute("INSERT INTO Score (score, uid, time) VALUES (%s, %s, %s)", 
             (score, session.get('uid'), datetime.now(),)
         )
-        cur.execute(select_sql, (session.get('uid'), ))
+        cur.execute(select_sql)
         data = cur.fetchmany(10)
 
     data_list = []
