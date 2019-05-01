@@ -6,7 +6,7 @@ import pkg_resources
 
 
 from itsdangerous import (
-    TimedJSONWebSignatureSerializer as Serializer,
+    URLSafeSerializer,
     BadSignature,
     SignatureExpired
 )
@@ -27,7 +27,7 @@ with open(CONF) as f:
 @rest.route('/notes', methods=['get'])
 def notes():
     """
-    curl 127.0.0.1:5000/notes
+    curl https://www.thecodebase.site/notes
     """
     select_sql = """
     SELECT note FROM Notes
@@ -41,7 +41,7 @@ def notes():
 @rest.route('/add_note/', methods=['POST'])
 def add_note():
     """
-    curl -u <token>:unused -X POST -F "note=<command>" http://127.0.0.1:5000/add_note/
+    curl -u <token>:unused -X POST -F "note=<command>" https://www.thecodebase.site/add_note/
     """
     if request.authorization and verify_auth_token(request.authorization.get('username')):
         note = request.form.get('note')
@@ -64,12 +64,12 @@ def encode_auth_token():
     Generates the Auth Token
     :return: string
     """
-    auth_s = Serializer(KEY)
+    auth_s = URLSafeSerializer(KEY)
     token = auth_s.dumps({"uid": session.get('uid')})
     return token
 
 def verify_auth_token(token):
-    s = Serializer(KEY)
+    s = URLSafeSerializer(KEY)
     try:
         data = s.loads(token)
     except SignatureExpired:
