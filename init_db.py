@@ -43,6 +43,15 @@ def init_database():
                 FOREIGN KEY (uid) REFERENCES users(uid)
             );
             """,
+
+        'Notes': """
+            CREATE TABLE Notes (
+                note_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+                time DATETIME,
+                note TEXT
+            );
+            """,
+
     }
 
     test_sql = """

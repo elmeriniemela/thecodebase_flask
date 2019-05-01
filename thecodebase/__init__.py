@@ -15,12 +15,14 @@ from .content import Projects
 from .dbconnect import Cursor
 from .users import users
 from .ajax import ajax
+from .rest import rest
 
 TOPIC_DICT = Projects()
 
 app = Flask(__name__)
 app.register_blueprint(users)
 app.register_blueprint(ajax)
+app.register_blueprint(rest)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
