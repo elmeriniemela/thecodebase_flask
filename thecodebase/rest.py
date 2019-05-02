@@ -43,7 +43,6 @@ def add_note():
     """
     curl -u <token>:unused -X POST -F "note=<command>" https://www.thecodebase.site/add_note/
     """
-    auth = verify_auth_token(request.authorization.get('username')) if request.authorization else "No attribute"
     if request.authorization and verify_auth_token(request.authorization.get('username')):
         note = request.form.get('note')
         if note:
@@ -55,7 +54,7 @@ def add_note():
         else:
             return "Empty post\n"
         
-    return auth
+    return "Authorization failed\n"
 
 
 @rest.route('/get-token/')
@@ -74,7 +73,7 @@ def verify_auth_token(token):
     try:
         data = s.loads(token)
     except SignatureExpired:
-        return "SignatureExpired\n"
+        return None # valid token, but expired
     except BadSignature:
-        return "BadSignature\n"
+        return None # invalid token
     return data['uid']
