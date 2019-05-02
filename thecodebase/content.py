@@ -55,7 +55,7 @@ def Projects():
         ],
         c_c_plus : [
             Project('C-practice', 'c-harjoitus', 'c-practice.html', 'c-practice.png'),
-            Project('Python C-extension', 'c-extension', False, 'under_construction.png'),
+            Project('Python C-extension', 'c-extension', 'c-extension.html', 'c-extension.png'),
         ],
         javascript : [
             Project('Phaser.js', 'phaser-js', 'phaser.html', 'phaser_logo.png'),
