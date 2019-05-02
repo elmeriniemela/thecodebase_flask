@@ -50,7 +50,7 @@ def add_note():
                 cur.execute("INSERT INTO Notes (note, time) VALUES (%s, %s)", 
                     (note, datetime.now(),)
                 )
-            return "OK\n"
+            return "OK ({})\n".format(note)
         else:
             return "Empty post\n"
         
@@ -65,7 +65,10 @@ def encode_auth_token():
     :return: string
     """
     auth_s = URLSafeSerializer(KEY)
-    token = auth_s.dumps({"uid": session.get('uid')})
+    uid = session.get('uid')
+    token = auth_s.dumps({"uid": uid, 'time': str(datetime.now())})
+    with Cursor() as cur:
+        cur.execute("UPDATE users SET auth_token = %s WHERE uid = %s", (token, uid))
     return token
 
 def verify_auth_token(token):
@@ -76,4 +79,9 @@ def verify_auth_token(token):
         return None # valid token, but expired
     except BadSignature:
         return None # invalid token
-    return data['uid']
+    uid = data['uid']
+    with Cursor() as cur:
+        cur.execute("SELECT auth_token FROM users WHERE uid = %s", (uid, ))
+        result = cur.fetchone()
+        if result:
+            return token == result[0]

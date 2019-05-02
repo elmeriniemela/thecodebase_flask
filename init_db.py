@@ -1,5 +1,24 @@
+
+from thecodebase.dbconnect import Cursor
+
+def add_column(table, column, datatype, position):
+    test_sql = """
+    SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_SCHEMA ='thecodebase' 
+    AND TABLE_NAME = %s 
+    AND COLUMN_NAME = %s;
+    """
+    alter = "ALTER TABLE %s ADD COLUMN %s %s " % (table, column, datatype)
+    if position:
+        alter += position
+    with Cursor() as cur:
+        exists = cur.execute(test_sql, (table, column,))
+        if not exists:
+            print("Adding: %s" % alter)
+            cur.execute(alter)
+
+
 def init_database():
-    from thecodebase.dbconnect import Cursor
     tables = {
         'users': """
             CREATE TABLE users (
@@ -8,7 +27,8 @@ def init_database():
                 password VARCHAR(100), 
                 email VARCHAR(50), 
                 settings VARCHAR(32500), 
-                tracking VARCHAR(32500), 
+                tracking VARCHAR(32500),
+                auth_token VARCHAR(100),
                 rank INT(3)
             );
             """,
@@ -54,6 +74,10 @@ def init_database():
 
     }
 
+    new_columns = [
+        ('users', 'auth_token', 'VARCHAR(100)', 'AFTER tracking')
+    ]
+
     test_sql = """
     SELECT table_name
     FROM information_schema.tables
@@ -61,15 +85,19 @@ def init_database():
     AND table_name = %s;
     """
     created = []
-    for table, query in tables.items():
-        with Cursor() as cur:
+    with Cursor() as cur:
+        for table, query in tables.items():
             table_exists = cur.execute(test_sql, (table, ))
             if not table_exists:
                 cur.execute(query)
                 created.append(table)
+        for column in new_columns:
+            add_column(*column)
+
     if created:
         print("Created new tables: {}".format(', '.join(created)))
     else:
         print("No new tables created")
+
 
 init_database()
