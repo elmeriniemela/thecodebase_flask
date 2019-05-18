@@ -5,12 +5,12 @@ import logging
 import json
 import pkg_resources
 
-from thecodebase import app as application
+from thecodebase import app
 
 logging.basicConfig(stream=sys.stderr)
 
 CONF = pkg_resources.resource_filename('thecodebase', 'credentials.json')
 with open(CONF) as f:
     KEY = json.load(f)["secret_key"]
-
-application.secret_key = KEY
+app.logger.setLevel(logging.INFO)
+app.secret_key = KEY
