@@ -26,8 +26,8 @@ def init_database():
                 username VARCHAR(20), 
                 password VARCHAR(100), 
                 email VARCHAR(50), 
-                settings VARCHAR(32500), 
-                tracking VARCHAR(32500),
+                settings TEXT(32500), 
+                tracking TEXT(32500),
                 auth_token VARCHAR(100),
                 rank INT(3)
             );
