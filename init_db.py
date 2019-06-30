@@ -14,7 +14,7 @@ def add_column(table, column, datatype, position):
     with Cursor() as cur:
         exists = cur.execute(test_sql, (table, column,))
         if not exists:
-            print("Adding: %s" % alter)
+            print("CHANGED: Adding column: %s" % alter)
             cur.execute(alter)
 
 
@@ -95,9 +95,9 @@ def init_database():
             add_column(*column)
 
     if created:
-        print("Created new tables: {}".format(', '.join(created)))
+        print("CHANGED: Created new tables: {}".format(', '.join(created)))
     else:
-        print("No new tables created")
+        print("OK")
 
 
 init_database()
