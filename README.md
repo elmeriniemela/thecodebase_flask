@@ -6,6 +6,7 @@
 
 Install instructions:
 
+* `sudo apt-get install mysql-client mysql-server libmysqlclient-dev -y`
 * `git clone <this repo>`
 * `cd thecodebase`
 * `pip install -e .`

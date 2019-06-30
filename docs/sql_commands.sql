@@ -26,6 +26,7 @@ CREATE TABLE visits (
 );
 
 GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'thecodebase'@'localhost' IDENTIFIED BY 'kikkeli97';
 
 SET PASSWORD FOR 'username'@'localhost' = PASSWORD('password');
 
