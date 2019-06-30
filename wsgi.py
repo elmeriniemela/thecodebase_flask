@@ -7,10 +7,16 @@ import pkg_resources
 
 from thecodebase import app
 
-logging.basicConfig(stream=sys.stderr)
+CONF_FNAME = pkg_resources.resource_filename('thecodebase', 'credentials.json')
 
-CONF = pkg_resources.resource_filename('thecodebase', 'credentials.json')
-with open(CONF) as f:
-    KEY = json.load(f)["secret_key"]
+with open(CONF_FNAME) as f:
+    CONF = json.load(f)
+
+if CONF.get('log_file'):
+    logging.basicConfig(filename=CONF['log_file'], level=logging.INFO)
+else:
+    logging.basicConfig(stream=sys.stdout)
+
+
 app.logger.setLevel(logging.INFO)
-app.secret_key = KEY
+app.secret_key = CONF["secret_key"]
