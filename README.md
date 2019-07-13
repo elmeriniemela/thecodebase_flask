@@ -1,6 +1,6 @@
 # The Codebase
 
-[Website](http://www.thecodebase.site "www.thecodebase.site")
+[www.thecodebase.site](http://www.thecodebase.site "www.thecodebase.site")
 
 ![alt text](thecodebase.png)
 
