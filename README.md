@@ -1,8 +1,10 @@
 # The Codebase
 
+
 [www.thecodebase.site](http://www.thecodebase.site "www.thecodebase.site")
 
-![alt text](thecodebase.png)
+
+![alt text](https://raw.githubusercontent.com/thecodebasesite/thecodebase/master/docs/thecodebase.png)
 
 Install instructions:
 
