@@ -101,19 +101,13 @@ def init_database():
         print("OK")
 
 def init_config():
-    import os
     import pkg_resources
-
-
-    filename = pkg_resources.resource_filename('thecodebase', 'config.json')
-    if os.path.isfile(filename):
-        print("Config exists")
-        return
-
     import json
     import secrets
     import string
+
     alphabet = string.ascii_letters + string.digits
+    filename = pkg_resources.resource_filename('thecodebase', 'config.json')
     
     config = {
         "mysql":{
