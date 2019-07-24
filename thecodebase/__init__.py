@@ -10,7 +10,7 @@ from flask import Markup
 from flask import session
 from flask import request
 
-
+from .config import CONFIG
 from .content import Projects
 from .dbconnect import Cursor
 from .users import users

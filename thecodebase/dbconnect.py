@@ -7,19 +7,12 @@ from contextlib import contextmanager
 import MySQLdb
 import pkg_resources
 
-filename = pkg_resources.resource_filename('thecodebase', 'credentials.json')
-
-with open(filename) as f:
-    credentials = json.load(f)["mysql"]
-
-USER = credentials[0]
-PASS = credentials[1]
-MYDB = credentials[0]
+from .config import CONFIG
 
 @contextmanager
 def Cursor():
     connection = MySQLdb.connect(
-        host="localhost", user=USER, passwd=PASS, db=MYDB)
+        host="localhost", **CONFIG['mysql'])
     cursor = connection.cursor()
     try:
         yield cursor
@@ -35,10 +28,10 @@ def Cursor():
 
 class NoContextlibCursor:
     '''Context manager for MySQL Cursor, that doesn't use contextlib context manager'''
-    def __init__(self, host="localhost", user=USER, passwd=PASS, dbname=MYDB):
+    def __init__(self, host, user, passwd, db):
 
         self.connection = MySQLdb.connect(
-            host=host, user=user, passwd=passwd, db=dbname)
+            host=host, user=user, passwd=passwd, db=db)
         self.cursor = self.connection.cursor()
 
     def __enter__(self):

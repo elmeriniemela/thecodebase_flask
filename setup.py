@@ -6,6 +6,6 @@ setup(
     packages=['thecodebase'],
     include_package_data=True,
     install_requires=[
-        'flask', 'passlib', 'mysqlclient',
+        'flask', 'passlib', 'mysqlclient', 'markdown', 'icalendar'
     ],
 )

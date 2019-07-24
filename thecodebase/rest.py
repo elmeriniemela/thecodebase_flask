@@ -20,9 +20,9 @@ from thecodebase import Cursor
 
 rest = Blueprint('rest', __name__, template_folder='templates')
 
-CONF = pkg_resources.resource_filename('thecodebase', 'credentials.json')
-with open(CONF) as f:
-    KEY = json.load(f)["secret_key"]
+from thecodebase import CONFIG
+
+KEY = CONFIG.get('secret_key', 'wdaaw')
 
 @rest.route('/notes', methods=['get'])
 def notes():

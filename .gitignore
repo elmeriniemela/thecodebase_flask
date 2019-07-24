@@ -1,5 +1,5 @@
 *.pyc
 .vscode/*
 !thecodebase/static
-thecodebase/credentials.json
+thecodebase/config.json
 *.egg-info

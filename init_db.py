@@ -1,7 +1,7 @@
 
-from thecodebase.dbconnect import Cursor
 
 def add_column(table, column, datatype, position):
+    from thecodebase.dbconnect import Cursor
     test_sql = """
     SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS 
     WHERE TABLE_SCHEMA ='thecodebase' 
@@ -19,6 +19,7 @@ def add_column(table, column, datatype, position):
 
 
 def init_database():
+    from thecodebase.dbconnect import Cursor
     tables = {
         'users': """
             CREATE TABLE users (
@@ -99,5 +100,58 @@ def init_database():
     else:
         print("OK")
 
+def init_config():
+    import os
+    import pkg_resources
 
-init_database()
+
+    filename = pkg_resources.resource_filename('thecodebase', 'config.json')
+    if os.path.isfile(filename):
+        print("Config exists")
+        return
+
+    import json
+    import secrets
+    import string
+    alphabet = string.ascii_letters + string.digits
+    
+    config = {
+        "mysql":{
+            "db": "thecodebase",
+            "user": "thecodebase",
+            "passwd": ''.join(secrets.choice(alphabet) for i in range(20)),
+        },
+        "secret_key": ''.join(secrets.choice(alphabet) for i in range(20)),
+        "log_file": "/var/log/uwsgi/thecodebase-flask.log",
+    }
+
+    with open(filename, 'w') as f:
+        json.dump(config, f, indent=4)
+    
+    print("Config created")
+
+
+def setup_mysql():
+    import MySQLdb
+    try:
+        conn = MySQLdb.connect(
+            host='localhost', user='root')
+    except MySQLdb._exceptions.OperationalError:
+        print("You must login as root first.")
+        return
+
+    from thecodebase import CONFIG
+    mysql_conf = CONFIG.get('mysql')
+    if not mysql_conf:
+        print("Mysql configuration missing")
+        return
+    
+    cursor = conn.cursor()
+    cursor.execute("CREATE DATABASE IF NOT EXISTS %s" % mysql_conf['db'])
+    cursor.execute("GRANT ALL PRIVILEGES ON *.* TO '%s'@'localhost' IDENTIFIED BY '%s'" % (mysql_conf['user'], mysql_conf['passwd']))
+    print("Mysql setup complete")
+
+if __name__ == '__main__':
+    init_config()
+    setup_mysql()
+    init_database()
