@@ -123,6 +123,8 @@ def init_config():
         json.dump(config, f, indent=4)
     
     print("Config created")
+    from thecodebase.config import cache_config
+    cache_config()
 
 
 def setup_mysql(passwd=None):
