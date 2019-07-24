@@ -125,14 +125,15 @@ def init_config():
     print("Config created")
 
 
-def setup_mysql():
+def setup_mysql(passwd=None):
     import MySQLdb
-    try:
-        conn = MySQLdb.connect(
-            host='localhost', user='root')
-    except MySQLdb._exceptions.OperationalError:
-        print("You must login as root first.")
-        return
+    kwargs = dict(
+        host='localhost', user='root'
+    )
+    if passwd:
+        kwargs['passwd'] = passwd
+
+    conn = MySQLdb.connect(**kwargs)
 
     from thecodebase import CONFIG
     mysql_conf = CONFIG.get('mysql')
@@ -146,6 +147,11 @@ def setup_mysql():
     print("Mysql setup complete")
 
 if __name__ == '__main__':
+    import sys
+    if len(sys.argv) != 2:
+        root_passwd = None
+    else:
+        root_passwd = sys.argv[1]
     init_config()
-    setup_mysql()
+    setup_mysql(root_passwd)
     init_database()
