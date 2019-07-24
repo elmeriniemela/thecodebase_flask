@@ -103,12 +103,12 @@ def init_database():
 def init_config():
     import pkg_resources
     import json
+    import os
     import secrets
     import string
 
     alphabet = string.ascii_letters + string.digits
     filename = pkg_resources.resource_filename('thecodebase', 'config.json')
-    
     config = {
         "mysql":{
             "db": "thecodebase",
@@ -116,8 +116,11 @@ def init_config():
             "passwd": ''.join(secrets.choice(alphabet) for i in range(20)),
         },
         "secret_key": ''.join(secrets.choice(alphabet) for i in range(20)),
-        "log_file": "/var/log/uwsgi/thecodebase-flask.log",
     }
+
+    log_path = '/var/log/uwsgi'
+    if os.path.isdir(log_path):
+        config['log_file'] = os.path.join(log_path, 'thecodebase-flask.log')
 
     with open(filename, 'w') as f:
         json.dump(config, f, indent=4)
@@ -140,8 +143,7 @@ def setup_mysql(passwd=None):
     from thecodebase import CONFIG
     mysql_conf = CONFIG.get('mysql')
     if not mysql_conf:
-        print("Mysql configuration missing")
-        return
+        raise TypeError("Mysql configuration missing")
     
     cursor = conn.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS %s" % mysql_conf['db'])

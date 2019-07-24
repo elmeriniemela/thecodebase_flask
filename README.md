@@ -10,3 +10,5 @@ Install instructions:
 * `git clone <this repo>`
 * `cd thecodebase`
 * `pip install -e .`
+* `python init_db.py`
+* `flask run`

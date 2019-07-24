@@ -9,6 +9,7 @@ from flask import request
 from flask import flash
 from flask import Markup
 from flask import redirect
+from flask import url_for
 
 def login_required(f):
     @wraps(f)
@@ -22,7 +23,7 @@ def login_required(f):
                 session['endpoint'] = request.endpoint
             else:
                 session['endpoint'] = session.get('endpoint', 'homepage')
-            return redirect('login')
+            return redirect(url_for('users.login'))
     return wrap
 
 

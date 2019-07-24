@@ -140,8 +140,6 @@ def about_me():
 @app.route('/download-cv/')
 @login_required
 def download_cv():
-    import pkg_resources
-    filename = pkg_resources.resource_filename('thecodebase', 'docs/cv_elmeri.pdf')
-    return send_file(filename, attachment_filename='cv_elmeri.pdf')
+    return send_file('docs/cv_elmeri.pdf', attachment_filename='cv_elmeri.pdf')
 
 
