@@ -64,6 +64,16 @@ def init_database():
                 FOREIGN KEY (uid) REFERENCES users(uid)
             );
             """,
+        'Repo': """
+            CREATE TABLE Repo (
+                repo_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(150),
+                display_name VARCHAR(50),
+                updated DATETIME,
+                readme_html BLOB,
+                noupdate BOOLEAN
+            );
+            """,
 
         'Notes': """
             CREATE TABLE Notes (

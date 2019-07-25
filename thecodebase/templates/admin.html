@@ -1,0 +1,67 @@
+{% extends "main.html" %}
+
+{% block body %}
+
+<!-- Modal -->
+<div class="modal fade" id="githubModal" tabindex="-1" role="dialog" aria-labelledby="githubModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="githubModalLabel">Github Sign-in</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ url_for('admin.admin_update_all_repos')}}" method="post">
+                <div class="modal-body">
+                        <input name="username" value="{{ form['username'] if form }}" type="text" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+                        <input name="password" value="{{ form['password'] if form }}" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-secondary" type="submit">Update Repos</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card-block bg-white">
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#githubModal">
+        Update Repos
+    </button>
+    <form action="{{ url_for('admin.admin_delete_all_repos')}}" method="post">
+        <button class="btn btn-secondary" type="submit">Delete Repos</button>
+    </form>
+
+    {% if repos %}
+    {% set columns = repos[0].keys() %}
+
+
+    <table class="table" style="max-width: 100% !important;">
+        <thead class="thead-dark">
+            <tr>
+                {% for column in columns %}
+                <th scope="col">{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for index, repo in enumerate(repos, start=1) %}
+            <tr>
+                {% for column in columns %}
+                <td>{{ repo[column] }}</td>
+                {% endfor %}
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+</div>
+{% endblock %}

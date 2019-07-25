@@ -21,6 +21,22 @@ from .refactor_ics import refactor_file
 GAMES_DICT = Games()
 
 
+from .admin import get_repos
+
+
+
+@app.route('/github-projects/')
+@login_required
+def github_projects():
+    kwargs = dict(
+        repos=get_repos(),
+        projects=True,
+        bg='programming_header.jpg',
+        page_title='Github Projects'
+    )
+    return render_template("github.html", **kwargs)
+
+
 @app.route('/')
 def homepage():
     return render_template("home.html", home=True)
@@ -32,7 +48,9 @@ def create_topic(topic):
         bg='programming_header.jpg',
         page_title='Projects'
     )
-    app.route('/{}/'.format(topic.url), endpoint=topic.url)(login_required(lambda: render_template('projects.html', **kwargs)))
+    app.route('/{}/'.format(topic.url), endpoint=topic.url)(
+        login_required(lambda: render_template('projects.html', **kwargs))
+    )
 
 for key in TOPIC_DICT:
     create_topic(key)
@@ -141,5 +159,3 @@ def about_me():
 @login_required
 def download_cv():
     return send_file('docs/cv_elmeri.pdf', attachment_filename='cv_elmeri.pdf')
-
-

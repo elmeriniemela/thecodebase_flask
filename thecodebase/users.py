@@ -20,10 +20,11 @@ from thecodebase.wrappers import login_required
 
 users = Blueprint('users', __name__, template_folder='templates')
 
-def session_loggedin(username, uid):
+def session_loggedin(username, uid, rank=0):
     session['logged_in'] = True
     session['username'] = username
     session['uid'] = uid
+    session['rank'] = rank
 
 
 @users.route('/login/', methods=['GET', 'POST'])
@@ -32,7 +33,7 @@ def login():
         email_username = request.form['emailUsername']
         password = request.form['password']
         with Cursor() as cur:
-            found = cur.execute("SELECT uid, username, password FROM users WHERE email=(%s) OR username=(%s)",
+            found = cur.execute("SELECT uid, rank, username, password FROM users WHERE email=(%s) OR username=(%s)",
                 (email_username, email_username,)
             )
             if not found:
@@ -41,13 +42,13 @@ def login():
 
             data = cur.fetchone()
 
-        uid, username, passwd_hash = data
+        uid, rank, username, passwd_hash = data
         if not sha256_crypt.verify(password, passwd_hash):
             flash("Invalid password")
             return render_template("login.html", signing=True, form=request.form)
 
 
-        session_loggedin(username, uid)
+        session_loggedin(username, uid, rank)
 
         flash("Succesful login!")
         endpoint = session.get('endpoint', 'homepage')

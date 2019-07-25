@@ -26,6 +26,15 @@ def login_required(f):
             return redirect(url_for('users.login'))
     return wrap
 
+def only_admins(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if session.get('rank', 0) > 0:
+            return f(*args, **kwargs)
+        else:
+            flash("This page is for admins only.")
+            return redirect(url_for('homepage'))
+    return wrap
 
 def mobile_not_supported(f):
     # Credits to http://detectmobilebrowsers.com/

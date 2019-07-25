@@ -16,6 +16,7 @@ from .dbconnect import Cursor
 from .users import users
 from .ajax import ajax
 from .rest import rest
+from .admin import admin
 
 TOPIC_DICT = Projects()
 
@@ -23,6 +24,7 @@ app = Flask(__name__)
 app.register_blueprint(users)
 app.register_blueprint(ajax)
 app.register_blueprint(rest)
+app.register_blueprint(admin)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
@@ -60,7 +62,3 @@ def url_value_preprocessor(endpoint, values):
 
     with Cursor() as cur:
         cur.execute(sql, data.values())
-
-if __name__ == "__main__":
-    app.run()
-      
