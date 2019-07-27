@@ -128,10 +128,6 @@ def init_config():
         "secret_key": ''.join(secrets.choice(alphabet) for i in range(20)),
     }
 
-    log_path = '/var/log/uwsgi'
-    if os.path.isdir(log_path):
-        config['log_file'] = os.path.join(log_path, 'thecodebase-flask.log')
-
     with open(filename, 'w') as f:
         json.dump(config, f, indent=4)
     
@@ -150,7 +146,7 @@ def setup_mysql(passwd=None):
 
     conn = MySQLdb.connect(**kwargs)
 
-    from thecodebase import CONFIG
+    from thecodebase.config import CONFIG
     mysql_conf = CONFIG.get('mysql')
     if not mysql_conf:
         raise TypeError("Mysql configuration missing")

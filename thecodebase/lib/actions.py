@@ -1,23 +1,10 @@
 
-
 from datetime import datetime
 
-
-from flask import Response
-from flask import session
 from flask import request
-from flask import flash
-from flask import redirect
-from flask import url_for
-from flask import render_template
-from flask import Blueprint
+from flask import session
 
-
-from thecodebase import Cursor
-from thecodebase.wrappers import only_admins
-
-
-admin = Blueprint('admin', __name__, template_folder='templates')
+from .dbconnect import Cursor
 
 def update_repos(username, password):
     from github import Github
@@ -70,29 +57,22 @@ def get_repos():
     return rows
 
 
-@admin.route('/admin/repos', methods=['GET'])
-@only_admins
-def admin_repos():
-    return render_template(
-        'admin.html',
-        page_title='Admin View',
-        repos=get_repos(),
-        enumerate=enumerate,
-    )
+def save_endpoint(endpoint):
 
-@admin.route('/admin/repos/update-all', methods=['POST'])
-@only_admins
-def admin_update_all_repos():
-    if request.method == 'POST':
-        try:
-            update_repos(request.form.get('username'), request.form.get('password'))
-        except:
-            flash("Login failed.")
-    return redirect(url_for('admin.admin_repos'))
+    data = {
+        'time': str(datetime.now()),
+        'remote_addr': request.environ.get('HTTP_X_REAL_IP', request.environ['REMOTE_ADDR']),
+    }
 
-@admin.route('/admin/repos/delete-all', methods=['POST'])
-@only_admins
-def admin_delete_all_repos():
-    if request.method == 'POST':
-        delete_repos()
-    return redirect(url_for('admin.admin_repos'))
+    if endpoint:
+        data.update({'endpoint': endpoint})
+
+    if 'logged_in' in session and 'uid' in session:
+        data.update({'uid': session['uid']})
+
+    placeholders = ', '.join(['%s'] * len(data))
+    columns = ', '.join(data.keys())
+    sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % ('visits', columns, placeholders)
+
+    with Cursor() as cur:
+        cur.execute(sql, data.values())

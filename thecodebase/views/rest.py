@@ -1,9 +1,6 @@
 
 
-import json
 from datetime import datetime
-import pkg_resources
-
 
 from itsdangerous import (
     URLSafeSerializer,
@@ -15,14 +12,13 @@ from flask import request
 from flask import Blueprint
 from flask import session
 
-from thecodebase.wrappers import login_required
-from thecodebase import Cursor
+from thecodebase.lib.wrappers import login_required
+from thecodebase.lib.dbconnect import Cursor
+from thecodebase.config import CONFIG
 
 rest = Blueprint('rest', __name__, template_folder='templates')
 
-from thecodebase import CONFIG
 
-KEY = CONFIG.get('secret_key', 'wdaaw')
 
 @rest.route('/notes', methods=['get'])
 def notes():
@@ -64,7 +60,7 @@ def encode_auth_token():
     Generates the Auth Token
     :return: string
     """
-    auth_s = URLSafeSerializer(KEY)
+    auth_s = URLSafeSerializer(CONFIG.get('secret_key'))
     uid = session.get('uid')
     token = auth_s.dumps({"uid": uid, 'time': str(datetime.now())})
     with Cursor() as cur:
@@ -72,7 +68,7 @@ def encode_auth_token():
     return token
 
 def verify_auth_token(token):
-    s = URLSafeSerializer(KEY)
+    s = URLSafeSerializer(CONFIG.get('secret_key'))
     try:
         data = s.loads(token)
     except SignatureExpired:

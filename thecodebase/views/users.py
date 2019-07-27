@@ -14,8 +14,8 @@ from flask import render_template
 from flask import Blueprint
 
 
-from thecodebase import Cursor
-from thecodebase.wrappers import login_required
+from thecodebase.lib.dbconnect import Cursor
+from thecodebase.lib.wrappers import login_required
 
 
 users = Blueprint('users', __name__, template_folder='templates')
@@ -51,7 +51,7 @@ def login():
         session_loggedin(username, uid, rank)
 
         flash("Succesful login!")
-        endpoint = session.get('endpoint', 'homepage')
+        endpoint = session.get('endpoint', 'main.homepage')
         return redirect(url_for(endpoint))
 
     return render_template("login.html", signing=True)
@@ -96,7 +96,7 @@ def register():
 
         flash("Thanks for registering!")
         session_loggedin(username, uid)
-        endpoint = session.get('endpoint', 'homepage')
+        endpoint = session.get('endpoint', 'main.homepage')
         return redirect(url_for(endpoint))
 
     return render_template("register.html", signing=True)
@@ -108,5 +108,5 @@ def logout():
     session.clear()
     flash("You have been logged out!")
     gc.collect()
-    return redirect(url_for('homepage'))
+    return redirect(url_for('main.homepage'))
     

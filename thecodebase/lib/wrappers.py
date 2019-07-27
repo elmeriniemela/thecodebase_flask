@@ -22,7 +22,7 @@ def login_required(f):
             if request.endpoint not in ['login', 'register']:
                 session['endpoint'] = request.endpoint
             else:
-                session['endpoint'] = session.get('endpoint', 'homepage')
+                session['endpoint'] = session.get('endpoint', 'main.homepage')
             return redirect(url_for('users.login'))
     return wrap
 
@@ -33,7 +33,7 @@ def only_admins(f):
             return f(*args, **kwargs)
         else:
             flash("This page is for admins only.")
-            return redirect(url_for('homepage'))
+            return redirect(url_for('main.homepage'))
     return wrap
 
 def mobile_not_supported(f):

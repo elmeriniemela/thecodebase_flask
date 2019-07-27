@@ -1,18 +1,46 @@
 #!/usr/bin/python
+import os
+from logging.config import dictConfig
 
-import sys
-import logging
-import json
-import pkg_resources
+if os.environ['FLASK_ENV'] == 'development':
+    handlers = {
+        'wsgi': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        }
+    }
+else:
+    handlers = {
+        'wsgi': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/var/log/uwsgi/thecodebase-flask.log',
+            'formatter': 'default',
+            'maxBytes': 1024*1000,
+            'backupCount': 3
+        }
+    }
+
+
+dictConfig({
+    'version': 1,
+    'formatters': {
+        'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }
+    },
+    'handlers': handlers,
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
+
+
 
 from thecodebase import app
-from thecodebase import CONFIG
-
-if CONFIG.get('log_file'):
-    logging.basicConfig(filename=CONFIG['log_file'], level=logging.INFO)
-else:
-    logging.basicConfig(stream=sys.stdout)
+from thecodebase.config import CONFIG
 
 
-app.logger.setLevel(logging.INFO)
 app.secret_key = CONFIG["secret_key"]
