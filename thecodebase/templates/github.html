@@ -8,7 +8,7 @@
     <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">        
         {% for repo in repos %}
         <li class="nav-item">
-            <a class="nav-link {{ 'active' if repo == repos[0] }} text-dark" id="{{ repo.name }}-tab" data-toggle="tab" href="#{{ repo.name }}" role="tab" aria-controls="{{ repo.name }}" aria-selected="false">{{ repo.name }}</a>
+            <a class="nav-link {{ 'active' if repo == repos[0] }} text-dark" id="{{ repo.name }}-tab" data-toggle="tab" href="#{{ repo.name }}" role="tab" aria-controls="{{ repo.name }}" aria-selected="false">{{ repo.display_name }}</a>
         </li>
         {% endfor %}
     </ul>

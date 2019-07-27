@@ -6,7 +6,7 @@ from flask import Blueprint
 
 
 from thecodebase.lib.wrappers import login_required
-from thecodebase.lib.actions import get_repos
+from thecodebase.lib.github_integration import get_all_repos
 from thecodebase.content import Projects
 
 TOPIC_DICT = Projects()
@@ -20,7 +20,7 @@ projects = Blueprint('projects', __name__, template_folder='templates')
 @login_required
 def github_projects():
     kwargs = dict(
-        repos=get_repos(),
+        repos=get_all_repos(),
         projects=True,
         bg='programming_header.jpg',
         page_title='Github Projects'

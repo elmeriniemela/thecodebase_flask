@@ -28,13 +28,69 @@
 </div>
 
 
+<script>
+
+function getForm(repo) {
+    $("#editForm").attr("action", `/admin/repos/${repo.repo_id}/update`);
+    $("#displayName").attr("value", repo.display_name);
+    $("#readmeHtml").val(repo.readme_html);
+    if (repo.noupdate) {
+        $("#noUpdate").attr("checked", true);
+    } else {
+        $("#noUpdate").removeAttr("checked");
+    }
+};
+
+</script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Repo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="editFormContainer">
+                <form id="editForm" action="/admin/repos/${repo.repo_id}/update" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="displayName">Display Name</label>
+                            <input name="display_name" id="displayName" value="${repo.display_name}" type="text" class="form-control" required autofocus>
+                        </div>
+                        <div class="form-check">
+                            <input name="noupdate" class="form-check-input" type="checkbox" id="noUpdate">
+                            <label class="form-check-label" for="noUpdate">
+                                Disable updates from Github
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="readmeHtml">Readme HTML</label>
+                            <textarea name="readme_html" class="form-control" id="readmeHtml" required rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="card-block bg-white">
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#githubModal">
+    <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#githubModal">
         Update Repos
     </button>
-    <form action="{{ url_for('admin.admin_delete_all_repos')}}" method="post">
+    <form class="mb-4" action="{{ url_for('admin.admin_delete_all_repos')}}" method="post">
         <button class="btn btn-secondary" type="submit">Delete Repos</button>
     </form>
 
@@ -45,19 +101,24 @@
     <table class="table" style="max-width: 100% !important;">
         <thead class="thead-dark">
             <tr>
-                {% for column in columns %}
-                <th scope="col">{{ column }}</th>
-                {% endfor %}
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Display name</th>
+                <th scope="col">Updates Disabled</th>
+                <th scope="col">Last Updated</th>
             </tr>
         </thead>
         <tbody>
             {% for index, repo in enumerate(repos, start=1) %}
-            <tr>
-                {% for column in columns %}
-                <td>{{ repo[column] }}</td>
-                {% endfor %}
+            <tr onclick='getForm({{ repo | tojson }});' data-toggle="modal" data-target="#editModal"  >
+                <td >{{ repo['repo_id'] }}</td>
+                <td >{{ repo['name'] }}</td>
+                <td >{{ repo['display_name'] }}</td>
+                <td class="text-center">
+                    <input type="checkbox" disabled {{ "checked" if repo['noupdate'] else "" }}>
+                </td>
+                <td >{{ repo['updated'] }}</td>
             </tr>
-
             {% endfor %}
         </tbody>
     </table>

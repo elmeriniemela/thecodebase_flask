@@ -29,7 +29,7 @@ def login_required(f):
 def only_admins(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if session.get('rank', 0) > 0:
+        if (session.get('rank') or 0) > 0:
             return f(*args, **kwargs)
         else:
             flash("This page is for admins only.")
