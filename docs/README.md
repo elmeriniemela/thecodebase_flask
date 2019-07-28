@@ -43,7 +43,7 @@ It's  running on the laptop
 
 
 
-![alt text](https://raw.githubusercontent.com/thecodebasesite/thecodebase/master/thecodebase.png)
+![alt text](https://raw.githubusercontent.com/thecodebasesite/thecodebase/master/docs/thecodebase.png)
 
 Install instructions:
 
