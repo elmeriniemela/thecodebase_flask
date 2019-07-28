@@ -74,6 +74,7 @@ def init_database():
         'Repo': """
             CREATE TABLE Repo (
                 repo_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+                sequence INT(11) DEFAULT 100,
                 name VARCHAR(150),
                 display_name VARCHAR(50),
                 topics JSON,

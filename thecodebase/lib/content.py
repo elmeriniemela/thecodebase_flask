@@ -112,7 +112,7 @@ class __content:
 
 
         with sql.Cursor() as cur:
-            cur.execute("SELECT * FROM Repo")
+            cur.execute("SELECT * FROM Repo ORDER BY sequence, repo_id")
             columns = [col[0] for col in cur.description]
             rows = [dict(zip(columns, row)) for row in cur.fetchall()]
         for row in rows:
@@ -135,6 +135,7 @@ class __content:
         data = {
             'display_name': vals['display_name'],
             'readme_html': vals['readme_html'],
+            'sequence': vals['sequence'],
             'no_update': bool(vals.get('no_update', False)),
             'update_date': datetime.now()
         }

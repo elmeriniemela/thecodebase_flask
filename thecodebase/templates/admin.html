@@ -19,8 +19,8 @@
                         <input name="password" value="{{ form['password'] if form }}" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                 </div>
                 <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary">Update Repos</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-secondary" type="submit">Update Repos</button>
                 </div>
             </form>
         </div>
@@ -33,6 +33,7 @@
 function getForm(repo) {
     $("#editForm").attr("action", `/admin/repos/${repo.repo_id}/update`);
     $("#displayName").attr("value", repo.display_name);
+    $("#sequence").attr("value", repo.sequence);
     $("#readmeHtml").val(repo.readme_html);
     if (repo.no_update) {
         $("#noUpdate").attr("checked", true);
@@ -62,6 +63,10 @@ function getForm(repo) {
                             <label for="displayName">Display Name</label>
                             <input name="display_name" id="displayName" value="${repo.display_name}" type="text" class="form-control" required autofocus>
                         </div>
+                        <div class="form-group">
+                                <label for="sequence">Sequence</label>
+                                <input name="sequence" id="sequence" value="${repo.sequence}" type="text" class="form-control" required autofocus>
+                            </div>
                         <div class="form-check">
                             <input name="no_update" class="form-check-input" type="checkbox" id="noUpdate">
                             <label class="form-check-label" for="noUpdate">
@@ -102,9 +107,10 @@ function getForm(repo) {
         <thead class="thead-dark">
             <tr>
                 <th scope="col">ID</th>
+                <th scope="col">Sequence</th>
                 <th scope="col">Name</th>
                 <th scope="col">Display name</th>
-                <th scope="col">Topic</th>
+                <th scope="col">Topics</th>
                 <th scope="col">Updates Disabled</th>
                 <th scope="col">Last Updated</th>
             </tr>
@@ -113,6 +119,7 @@ function getForm(repo) {
             {% for repo in content.repos %}
             <tr onclick='getForm({{ repo | tojson }});' data-toggle="modal" data-target="#editModal"  >
                 <td >{{ repo['repo_id'] }}</td>
+                <td >{{ repo['sequence'] }}</td>
                 <td >{{ repo['name'] }}</td>
                 <td >{{ repo['display_name'] }}</td>
                 <td >{{ repo['topics'] }}</td>
