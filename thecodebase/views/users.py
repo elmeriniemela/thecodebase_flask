@@ -14,7 +14,7 @@ from flask import render_template
 from flask import Blueprint
 
 
-from thecodebase.lib.dbconnect import Cursor
+from thecodebase.lib.sql import Cursor
 from thecodebase.lib.wrappers import login_required
 
 

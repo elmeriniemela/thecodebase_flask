@@ -13,7 +13,7 @@ from flask import Blueprint
 from flask import session
 
 from thecodebase.lib.wrappers import login_required
-from thecodebase.lib.dbconnect import Cursor
+from thecodebase.lib.sql import Cursor
 from thecodebase.config import CONFIG
 
 rest = Blueprint('rest', __name__, template_folder='templates')

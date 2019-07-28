@@ -4,9 +4,8 @@ from flask import Flask
 from flask import render_template
 
 from .lib.actions import save_endpoint
-from .content import Projects
+from .lib.content import content
 from .views import views
-
 
 app = Flask(__name__)
 app.register_blueprint(views)
@@ -16,7 +15,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.context_processor
 def topic_dict_context():
-    return dict(TOPIC_DICT=Projects(), bg='cave_header.jpg', page_title='The Codebase')
+    return dict(content=content, bg='cave_header.jpg', page_title='The Codebase')
 
 
 @app.errorhandler(404)

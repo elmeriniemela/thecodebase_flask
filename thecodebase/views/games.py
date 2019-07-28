@@ -8,12 +8,10 @@ from flask import render_template
 from flask import request
 from flask import Blueprint
 
-
-from thecodebase.content import Games
-from thecodebase.lib.dbconnect import Cursor
+from thecodebase import content
+from thecodebase.lib.sql import Cursor
 from thecodebase.lib.wrappers import mobile_not_supported, login_required
 
-GAMES_DICT = Games()
 
 games = Blueprint('games', __name__, template_folder='templates')
 
@@ -45,20 +43,18 @@ def games_view():
     kwargs = dict(
         game=True,
         bg='gaming_header.jpg',
-        GAMES_DICT=GAMES_DICT,
         page_title='Games'
     )
     return render_template("games.html", **kwargs)
 
-def create_game(game, resources):
+def create_game(phaser_game):
     kwargs = dict(
          game=True,
          bg='gaming_header.jpg',
-         page_title=game.title,
-         folder=game.url,
-         resources=resources
+         page_title=phaser_game.title,
+         phaser_game=phaser_game
     )
-    games.route('/games/{}/'.format(game.url), endpoint=game.url)(
+    games.route('/games/{}/'.format(phaser_game.url), endpoint=phaser_game.url)(
         mobile_not_supported(
                 login_required(
                     lambda: render_template('phaser-game.html', **kwargs)
@@ -66,5 +62,5 @@ def create_game(game, resources):
             )
         )
 
-for game, resources in GAMES_DICT.items():
-    create_game(game, resources)
+for game in content.games:
+    create_game(game)

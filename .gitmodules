@@ -1,0 +1,6 @@
+[submodule "thecodebase/static/games/platform-game"]
+	path = thecodebase/static/games/platform-game
+	url = https://github.com/thecodebasesite/platform-game.git
+[submodule "thecodebase/static/games/eat-game"]
+	path = thecodebase/static/games/eat-game
+	url = https://github.com/thecodebasesite/eat-game.git

@@ -20,7 +20,7 @@
                         Projects
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% for topic in TOPIC_DICT.keys() %}
+                        {% for topic in content.topics %}
                         <a class="dropdown-item" href="/{{ topic.url }}/">{{ topic.title }}</a>
                         {% endfor %}
                     </div>

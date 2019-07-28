@@ -1,9 +1,32 @@
 
 import logging
+import gc
+from contextlib import contextmanager
+import MySQLdb
 
-from .dbconnect import Cursor
+from ..config import CONFIG
+
 
 logger = logging.getLogger(__name__)
+
+
+
+@contextmanager
+def Cursor():
+    'Context manager for MySQL cursor'
+    connection = MySQLdb.connect(
+        host="localhost", **CONFIG['mysql'])
+    cursor = connection.cursor()
+    try:
+        yield cursor
+        connection.commit()
+    except Exception as error:
+        connection.rollback()
+        raise error
+    finally:
+        cursor.close()
+        connection.close()
+        gc.collect()
 
 
 def insert_row(table, data_dict):

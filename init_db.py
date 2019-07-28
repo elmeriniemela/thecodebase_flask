@@ -1,7 +1,15 @@
 
+import MySQLdb
+import pkg_resources
+import json
+import secrets
+import string
+from thecodebase.lib.sql import Cursor
+from thecodebase import config
+
+
 
 def add_column(table, column, datatype, position):
-    from thecodebase.dbconnect import Cursor
     test_sql = """
     SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS 
     WHERE TABLE_SCHEMA ='thecodebase' 
@@ -19,7 +27,6 @@ def add_column(table, column, datatype, position):
 
 
 def init_database():
-    from thecodebase.dbconnect import Cursor
     tables = {
         'users': """
             CREATE TABLE users (
@@ -69,9 +76,10 @@ def init_database():
                 repo_id INT(11) AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(150),
                 display_name VARCHAR(50),
-                updated DATETIME,
+                topic VARCHAR(150),
+                update_date DATETIME,
                 readme_html BLOB,
-                noupdate BOOLEAN
+                no_update BOOLEAN
             );
             """,
 
@@ -111,15 +119,9 @@ def init_database():
         print("OK")
 
 def init_config():
-    import pkg_resources
-    import json
-    import os
-    import secrets
-    import string
-
     alphabet = string.ascii_letters + string.digits
     filename = pkg_resources.resource_filename('thecodebase', 'config.json')
-    config = {
+    config_dict = {
         "mysql":{
             "db": "thecodebase",
             "user": "thecodebase",
@@ -129,15 +131,13 @@ def init_config():
     }
 
     with open(filename, 'w') as f:
-        json.dump(config, f, indent=4)
+        json.dump(config_dict, f, indent=4)
     
     print("Config created")
-    from thecodebase.config import cache_config
-    cache_config()
+    config.cache_config()
 
 
 def setup_mysql(passwd=None):
-    import MySQLdb
     kwargs = dict(
         host='localhost', user='root'
     )
@@ -146,14 +146,15 @@ def setup_mysql(passwd=None):
 
     conn = MySQLdb.connect(**kwargs)
 
-    from thecodebase.config import CONFIG
-    mysql_conf = CONFIG.get('mysql')
+    mysql_conf = config.CONFIG.get('mysql')
     if not mysql_conf:
         raise TypeError("Mysql configuration missing")
     
     cursor = conn.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS %s" % mysql_conf['db'])
     cursor.execute("GRANT ALL PRIVILEGES ON *.* TO '%s'@'localhost' IDENTIFIED BY '%s'" % (mysql_conf['user'], mysql_conf['passwd']))
+    cursor.close()
+    conn.close()
     print("Mysql setup complete")
 
 if __name__ == '__main__':

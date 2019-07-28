@@ -6,31 +6,17 @@ from flask import Blueprint
 
 
 from thecodebase.lib.wrappers import login_required
-from thecodebase.lib.github_integration import get_all_repos
-from thecodebase.content import Projects
-
-TOPIC_DICT = Projects()
+from thecodebase import content
 
 
 projects = Blueprint('projects', __name__, template_folder='templates')
 
 
 
-@projects.route('/github-projects/')
-@login_required
-def github_projects():
-    kwargs = dict(
-        repos=get_all_repos(),
-        projects=True,
-        bg='programming_header.jpg',
-        page_title='Github Projects'
-    )
-    return render_template("github.html", **kwargs)
-
-
 def create_topic(topic):
     kwargs = dict(
         topic=topic,
+        repos=content.repos[topic.url],
         projects=True,
         bg='programming_header.jpg',
         page_title='Projects'
@@ -39,5 +25,5 @@ def create_topic(topic):
         login_required(lambda: render_template('projects.html', **kwargs))
     )
 
-for key in TOPIC_DICT:
+for key in content.topics:
     create_topic(key)

@@ -9,7 +9,7 @@ from flask import send_file
 from flask import render_template
 from flask import Blueprint
 
-from thecodebase.lib.dbconnect import Cursor
+from thecodebase.lib.sql import Cursor
 from thecodebase.lib.refactor_ics import refactor_file
 from thecodebase.lib.wrappers import login_required
 

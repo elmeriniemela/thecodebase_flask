@@ -34,7 +34,7 @@ function getForm(repo) {
     $("#editForm").attr("action", `/admin/repos/${repo.repo_id}/update`);
     $("#displayName").attr("value", repo.display_name);
     $("#readmeHtml").val(repo.readme_html);
-    if (repo.noupdate) {
+    if (repo.no_update) {
         $("#noUpdate").attr("checked", true);
     } else {
         $("#noUpdate").removeAttr("checked");
@@ -63,7 +63,7 @@ function getForm(repo) {
                             <input name="display_name" id="displayName" value="${repo.display_name}" type="text" class="form-control" required autofocus>
                         </div>
                         <div class="form-check">
-                            <input name="noupdate" class="form-check-input" type="checkbox" id="noUpdate">
+                            <input name="no_update" class="form-check-input" type="checkbox" id="noUpdate">
                             <label class="form-check-label" for="noUpdate">
                                 Disable updates from Github
                             </label>
@@ -104,6 +104,7 @@ function getForm(repo) {
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Display name</th>
+                <th scope="col">Topic</th>
                 <th scope="col">Updates Disabled</th>
                 <th scope="col">Last Updated</th>
             </tr>
@@ -114,10 +115,11 @@ function getForm(repo) {
                 <td >{{ repo['repo_id'] }}</td>
                 <td >{{ repo['name'] }}</td>
                 <td >{{ repo['display_name'] }}</td>
+                <td >{{ repo['topic'] }}</td>
                 <td class="text-center">
-                    <input type="checkbox" disabled {{ "checked" if repo['noupdate'] else "" }}>
+                    <input type="checkbox" disabled {{ "checked" if repo['no_update'] else "" }}>
                 </td>
-                <td >{{ repo['updated'] }}</td>
+                <td >{{ repo['update_date'] }}</td>
             </tr>
             {% endfor %}
         </tbody>
