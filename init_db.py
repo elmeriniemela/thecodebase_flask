@@ -76,7 +76,7 @@ def init_database():
                 repo_id INT(11) AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(150),
                 display_name VARCHAR(50),
-                topic VARCHAR(150),
+                topics JSON,
                 update_date DATETIME,
                 readme_html BLOB,
                 no_update BOOLEAN

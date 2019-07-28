@@ -10,7 +10,7 @@ from flask import Blueprint
 
 
 from thecodebase.lib.wrappers import only_admins
-from thecodebase.lib import github_integration as github
+from thecodebase import content
 
 logger = logging.getLogger(__name__)
 
@@ -20,12 +20,9 @@ admin = Blueprint('admin', __name__, template_folder='templates')
 @admin.route('/admin/repos', methods=['GET'])
 @only_admins
 def admin_repos():
-    repos = github.get_all_repos()
     return render_template(
         'admin.html',
         page_title='Github Repositories',
-        repos=repos,
-        enumerate=enumerate,
     )
 
 
@@ -34,7 +31,7 @@ def admin_repos():
 def admin_update_all_repos():
     if request.method == 'POST':
         try:
-            github.update_all_repos(
+            content.fetch_repos_from_remote(
                 username=request.form.get('username'),
                 password=request.form.get('password')
             )
@@ -49,12 +46,12 @@ def admin_update_all_repos():
 @only_admins
 def admin_update_repo_by_id(repo_id):
     if request.method == 'POST':
-        github.update_repo(repo_id, request.form)
+        content.update_repo(repo_id, request.form)
     return redirect(url_for('admin.admin_repos'))
 
 @admin.route('/admin/repos/delete-all', methods=['POST'])
 @only_admins
 def admin_delete_all_repos():
     if request.method == 'POST':
-        github.delete_all_repos()
+        content.delete_all_repos()
     return redirect(url_for('admin.admin_repos'))

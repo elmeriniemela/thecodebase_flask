@@ -94,8 +94,8 @@ function getForm(repo) {
         <button class="btn btn-secondary" type="submit">Delete Repos</button>
     </form>
 
-    {% if repos %}
-    {% set columns = repos[0].keys() %}
+    {% if content.repos %}
+    {% set columns = content.repos[0].keys() %}
 
 
     <table class="table" style="max-width: 100% !important;">
@@ -110,12 +110,12 @@ function getForm(repo) {
             </tr>
         </thead>
         <tbody>
-            {% for index, repo in enumerate(repos, start=1) %}
+            {% for repo in content.repos %}
             <tr onclick='getForm({{ repo | tojson }});' data-toggle="modal" data-target="#editModal"  >
                 <td >{{ repo['repo_id'] }}</td>
                 <td >{{ repo['name'] }}</td>
                 <td >{{ repo['display_name'] }}</td>
-                <td >{{ repo['topic'] }}</td>
+                <td >{{ repo['topics'] }}</td>
                 <td class="text-center">
                     <input type="checkbox" disabled {{ "checked" if repo['no_update'] else "" }}>
                 </td>

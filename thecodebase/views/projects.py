@@ -16,7 +16,6 @@ projects = Blueprint('projects', __name__, template_folder='templates')
 def create_topic(topic):
     kwargs = dict(
         topic=topic,
-        repos=content.repos[topic.url],
         projects=True,
         bg='programming_header.jpg',
         page_title='Projects'
