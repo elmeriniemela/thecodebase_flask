@@ -33,7 +33,6 @@ def prettify(repo_name):
 
 class __content:
 
-    repos = list()
     topics = tuple()
     topics = tuple()
 
@@ -104,7 +103,8 @@ class __content:
         )
 
 
-    def query_repos(self):
+    @property
+    def repos(self):
         topic_dict = {}
         for topic_tuple in self.topics:
             topic_tuple.repos.clear()
@@ -124,12 +124,11 @@ class __content:
                 if topic in topic_dict:
                     topic_dict[topic].repos.append(row)
 
-        self.repos = rows
+        return rows
 
     def delete_all_repos(self):
         with sql.Cursor() as cur:
             cur.execute("DELETE FROM Repo")
-        self.query_repos()
 
     def update_repo(self, repo_id, vals):
         data = {
@@ -141,7 +140,6 @@ class __content:
         }
 
         sql.update_row('Repo', data, repo_id=repo_id)
-        self.query_repos()
 
     def fetch_repos_from_remote(self, username, password):
         ghub = Github(username, password)
@@ -175,10 +173,5 @@ class __content:
                 else:
                     row.update(display_name=prettify(repo.name), name=repo.name)
                     sql.insert_row('Repo', row)
-        self.query_repos()
 
 content = __content()
-try:
-    content.query_repos()
-except Exception as error:
-    logger.exception(error)
