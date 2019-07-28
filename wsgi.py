@@ -2,7 +2,7 @@
 import os
 from logging.config import dictConfig
 
-if os.environ['FLASK_ENV'] == 'development':
+if os.environ.get('FLASK_ENV') == 'development':
     handlers = {
         'wsgi': {
             'level': 'INFO',
