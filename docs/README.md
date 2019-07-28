@@ -1,7 +1,4 @@
-# The Codebase
-
-
-[www.thecodebase.site](http://www.thecodebase.site "www.thecodebase.site")
+## The Codebase
 
 This website is built using Python's 
 <a href="http://flask.pocoo.org/">Flask library</a> 
