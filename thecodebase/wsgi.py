@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
 from logging.config import dictConfig
+from .config import CONFIG
 
 if os.environ.get('FLASK_ENV') == 'development':
     handlers = {
@@ -15,7 +16,7 @@ else:
     handlers = {
         'wsgi': {
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/uwsgi/thecodebase-flask.log',
+            'filename': CONFIG.get("log_file"),
             'formatter': 'default',
             'maxBytes': 1024*1000,
             'backupCount': 3
@@ -40,7 +41,6 @@ dictConfig({
 
 
 from thecodebase import app
-from thecodebase.config import CONFIG
 
 
 app.secret_key = CONFIG["secret_key"]

@@ -2,11 +2,10 @@
 import logging
 import os
 import json
-import pkg_resources
 
 logger = logging.getLogger(__name__)
 
-CONFIG_PATH = pkg_resources.resource_filename('thecodebase', 'config.json')
+CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json')
 
 CONFIG = {}
 

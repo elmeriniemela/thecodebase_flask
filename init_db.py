@@ -164,6 +164,6 @@ if __name__ == '__main__':
         root_passwd = None
     else:
         root_passwd = sys.argv[1]
-    init_config()
+    # init_config()
     setup_mysql(root_passwd)
     init_database()
